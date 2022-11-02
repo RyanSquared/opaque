@@ -1,0 +1,11 @@
+version: "3.0"
+services:
+  opaque:
+    build:
+      context: .
+      args:
+        # For production, change both to "release"
+        PROFILE: dev
+        TARGET: debug
+    ports:
+    - "8000:8000"
