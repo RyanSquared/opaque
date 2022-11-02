@@ -1,0 +1,136 @@
+:root {
+	/* let's define some terminal colors */
+	/* this is based off: https://github.com/romainl/Apprentice#working-with-816-colors */
+
+	--color-black: #1C1C1C;
+	--color-red: #AF5F5F;
+	--color-green: #5F875F;
+	--color-yellow: #87875F;
+	--color-blue: #5F87AF;
+	--color-purple: #5F5F87;
+	--color-cyan: #5F8787;
+	/* Probably, never use gray. Too low contrast */
+	--color-gray: #6C6C6C;
+	--color-background: #BCBCBC;
+
+	--color-bright-black: #444444;
+	--color-bright-red: #FF8700;
+	--color-bright-green: #87AF87;
+	--color-bright-yellow: #FFFFAF;
+	--color-bright-blue: #87AFD7;
+	--color-bright-purple: #8787AF;
+	--color-bright-cyan: #5FAFAF;
+	/* Don't think too hard. Terminal colors are weird. */
+	--color-bright-gray: #FFFFFF;
+	--color-text: #262626;
+
+	color: var(--color-text);
+	background-color: var(--color-background);
+
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-text: #BCBCBC;
+		--color-background: #262626;
+		color: var(--color-text);
+		background-color: var(--color-background);
+	}
+}
+
+/* HTML overrides */
+
+body {
+	/* Set up a flexbox display, vertically, using 100% height */
+	display: flex; /* on the haters, lmao */
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0px;
+	padding: 0px;
+}
+
+a:link, a:visited {
+	color: var(--color-blue);
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: var(--color-blue);
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+/* Header */
+
+header {
+	width: 100%;
+	line-height: 54px;
+	border-bottom: 1px solid var(--color-gray);
+}
+
+.content {
+	max-width: 1200px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#site_title {
+	font-size: 26px;
+	font-weight: 300;
+	color: var(--color-text);
+}
+
+#site_nav {
+	float: right;
+}
+
+#site_nav > a {
+	font-size: 16px;
+	color: var(--color-text);
+}
+
+/* Main */
+
+main {
+	/* god, i used to spend so much time getting footers to stick to the
+	 * bottom of the page until it was too tall to not be sticky. the fact
+	 * that it's Just This Easy now is incredible. this comment is longer
+	 * than the implementation.
+	 */
+	flex: 1;
+	width: 100%;
+	margin: 30px 0px;
+}
+
+/* Footer */
+
+footer {
+	width: 100%;
+	/* TODO: stick to bottom until scroll */
+}
+
+footer > .content > div > div {
+	float: left;
+}
+
+footer > .content > div > div:nth-child(1) {
+	width: 30%;
+	list-style: none;
+}
+
+footer > .content > div > div:nth-child(2) {
+	width: 25%;
+}
+
+footer > .content > div > div:nth-child(3) {
+	width: 45%;
+}
+
+/* Actual content, yay! */
+
+ul.no_list_style {
+	list-style: none;
+	padding-left: 0px;
+}

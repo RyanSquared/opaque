@@ -7,8 +7,14 @@ ARG TARGET=debug
 ADD . /build
 WORKDIR /build
 
-RUN --mount=type=cache,target=/build/target cargo build --profile $PROFILE
+RUN \
+    --mount=type=cache,target=/build/target \
+    --mount=type=cache,target=/usr/local/cargo/registry \
+    cargo build --profile $PROFILE && \
+    mkdir -p /out && \
+    find /build/target -type f -executable -name opaque -exec cp {} /out \;
 
 FROM debian:bullseye
-COPY --from=builder /build/target/ /target
+COPY --from=builder /out/opaque /usr/local/bin/opaque
 EXPOSE 8000
+ENTRYPOINT /usr/local/bin/opaque
