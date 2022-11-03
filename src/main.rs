@@ -5,6 +5,7 @@ use tower_http::trace::TraceLayer;
 use tower_http::catch_panic::CatchPanicLayer;
 use tracing::info;
 use tracing_subscriber::filter::{EnvFilter, LevelFilter};
+use tracing_subscriber::fmt::format::FmtSpan;
 use tracing_subscriber::prelude::*;
 
 use axum::{Router, Extension, routing::get};
@@ -20,7 +21,7 @@ fn setup_registry() {
         .from_env_lossy();
     tracing_subscriber::registry()
         .with(envfilter)
-        .with(tracing_subscriber::fmt::layer())
+        .with(tracing_subscriber::fmt::layer().with_span_events(FmtSpan::CLOSE))
         .init();
 }
 
