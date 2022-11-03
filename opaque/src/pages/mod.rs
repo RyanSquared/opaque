@@ -4,8 +4,9 @@ use axum::Extension;
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 use tracing::debug;
 
+use opaque_markdown::render_path_to_html;
+
 use crate::state::State;
-use crate::posts::render_path_to_html;
 use crate::rewrite_links::rewrite_links;
 
 pub(crate) mod assets;

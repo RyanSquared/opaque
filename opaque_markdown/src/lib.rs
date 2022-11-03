@@ -1,13 +1,15 @@
-use std::path::Path;
-
 use comrak::{
     parse_document, format_html, Arena, ComrakOptions,
     nodes::AstNode,
 };
+
+#[cfg(tracing)]
 use tracing::debug;
 
+use std::path::Path;
+
 #[derive(thiserror::Error, Debug)]
-pub(crate) enum Error {
+pub enum Error {
     #[error("markdown formatting failed: {0}")]
     MarkdownFormat(std::io::Error),
 
@@ -17,6 +19,8 @@ pub(crate) enum Error {
     #[error("File read error: {0}, context?: {1}")]
     FileRead(std::io::Error, String)
 }
+
+pub type Result<T> = std::result::Result<T, Error>;
 
 fn create_options() -> ComrakOptions {
     let mut comrak_options = ComrakOptions::default();
@@ -37,8 +41,6 @@ lazy_static::lazy_static! {
     static ref COMRAK_OPTIONS: ComrakOptions = create_options();
 }
 
-pub(crate) type Result<T> = std::result::Result<T, Error>;
-
 fn iter_nodes<'a, F>(node: &'a AstNode<'a>, f: &F)
 where F: Fn(&'a AstNode<'a>) {
     f(node);
@@ -47,7 +49,7 @@ where F: Fn(&'a AstNode<'a>) {
     }
 }
 
-pub(crate) fn render_to_html(input: &str) -> Result<String> {
+pub fn render_to_html(input: &str) -> Result<String> {
     // Create an arena for rendering purposes
     let arena = Arena::new();
     let root = parse_document(&arena, input, &COMRAK_OPTIONS);
@@ -67,14 +69,34 @@ pub(crate) fn render_to_html(input: &str) -> Result<String> {
     Ok(string)
 }
 
-#[tracing::instrument]
-pub(crate) async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+#[cfg_attr(tracing, tracing::instrument)]
+#[cfg(tokio)]
+pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+    #[cfg(tracing)]
     debug!("reading file");
+
     let file_content = match tokio::fs::read_to_string(&path).await {
         Ok(content) => content,
         Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
     };
 
+    #[cfg(tracing)]
+    debug!("rendering HTML");
+
+    render_to_html(file_content.as_str())
+}
+
+#[cfg_attr(tracing, tracing::instrument)]
+#[cfg(not(tokio))]
+pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+    #[cfg(tracing)]
+    debug!("reading file");
+    let file_content = match std::fs::read_to_string(&path) {
+        Ok(content) => content,
+        Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
+    };
+
+    #[cfg(tracing)]
     debug!("rendering HTML");
     render_to_html(file_content.as_str())
 }
