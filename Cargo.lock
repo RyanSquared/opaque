@@ -916,11 +916,9 @@ version = "0.1.0"
 dependencies = [
  "ansi-parser",
  "axum",
- "comrak",
  "heapless",
  "html-escape",
  "include_dir",
- "lazy_static",
  "lol_html",
  "maud",
  "mime_guess",
