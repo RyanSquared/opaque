@@ -3,7 +3,7 @@ use comrak::{
     nodes::AstNode,
 };
 
-#[cfg(tracing)]
+#[cfg(feature="tracing")]
 use tracing::debug;
 
 use std::path::Path;
@@ -69,10 +69,10 @@ pub fn render_to_html(input: &str) -> Result<String> {
     Ok(string)
 }
 
-#[cfg_attr(tracing, tracing::instrument)]
-#[cfg(tokio)]
+#[cfg_attr(feature="tracing", tracing::instrument)]
+#[cfg(feature="tokio")]
 pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
-    #[cfg(tracing)]
+    #[cfg(feature="tracing")]
     debug!("reading file");
 
     let file_content = match tokio::fs::read_to_string(&path).await {
@@ -86,17 +86,17 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
     render_to_html(file_content.as_str())
 }
 
-#[cfg_attr(tracing, tracing::instrument)]
-#[cfg(not(tokio))]
+#[cfg_attr(feature="tracing", tracing::instrument)]
+#[cfg(not(feature="tokio"))]
 pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
-    #[cfg(tracing)]
+    #[cfg(feature="tracing")]
     debug!("reading file");
     let file_content = match std::fs::read_to_string(&path) {
         Ok(content) => content,
         Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
     };
 
-    #[cfg(tracing)]
+    #[cfg(feature="tracing")]
     debug!("rendering HTML");
     render_to_html(file_content.as_str())
 }
