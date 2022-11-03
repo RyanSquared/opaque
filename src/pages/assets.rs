@@ -1,14 +1,19 @@
 use axum::extract::Path;
+#[allow(unused_imports)]
 use axum::{
     response::{Response, IntoResponse},
     http::StatusCode,
     body::{boxed, Empty, Full},
 };
+
+#[cfg(feature = "bundled_static")]
 use include_dir::{include_dir, Dir};
 
+#[cfg(feature = "bundled_static")]
 static STATIC_DIR: Dir<'_> = include_dir!("static");
 
 #[allow(clippy::unused_async)]
+#[cfg(feature = "bundled_static")]
 pub(crate) async fn static_path(Path(path): axum::extract::Path<String>) -> impl IntoResponse {
     let path = path.trim_start_matches('/');
     let mime_type = mime_guess::from_path(path).first_or_text_plain();
@@ -27,4 +32,13 @@ pub(crate) async fn static_path(Path(path): axum::extract::Path<String>) -> impl
             .body(boxed(Empty::new()))
             .expect("unable to build 404 body")
     }
+}
+
+#[allow(clippy::unused_async)]
+#[cfg(not(feature = "bundled_static"))]
+pub(crate) async fn static_path(Path(_path): axum::extract::Path<String>) -> impl IntoResponse {
+    Response::builder()
+        .status(StatusCode::NOT_FOUND)
+        .body(boxed(Empty::new()))
+        .expect("unable to build 404 body")
 }
