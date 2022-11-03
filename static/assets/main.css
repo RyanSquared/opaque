@@ -50,6 +50,10 @@ body {
 	padding: 0px;
 }
 
+img {
+	width: 100%;
+}
+
 a:link, a:visited {
 	color: var(--color-blue);
 	background-color: transparent;
