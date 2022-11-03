@@ -15,6 +15,7 @@ pub(crate) struct Config {
 
 pub(crate) struct State {
     pub(crate) config: Config,
+    pub(crate) url: String,
     pub(crate) page_map: Vec<(String, String)>,
 }
 
@@ -23,12 +24,13 @@ impl State {
         State {
             config: Config {
                 name: "Enigma".to_string(),
-                description: "The musings of someone too lost in the sauce to understand the pasta is the true goal of life.".to_string(),
+                description: "".to_string(),
                 author: Author {
                     name: "RyanSquared".to_string(),
                     email: "me@ryansquared.pub".to_string(),
                 }
             },
+            url: "https://ryansquared.pub".to_string(),
             page_map: vec![],
         }
     }

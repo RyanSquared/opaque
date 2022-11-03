@@ -16,5 +16,9 @@ RUN \
 
 FROM debian:bullseye
 COPY --from=builder /out/opaque /usr/local/bin/opaque
+
+WORKDIR /usr/share/opaque
+COPY content /usr/share/opaque/content
+
 EXPOSE 8000
 ENTRYPOINT /usr/local/bin/opaque

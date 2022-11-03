@@ -10,6 +10,8 @@ use axum::{Router, Extension, routing::get};
 
 mod state;
 mod pages;
+mod posts;
+mod rewrite_links;
 
 fn setup_registry() {
     let envfilter = EnvFilter::builder()
