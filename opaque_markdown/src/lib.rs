@@ -80,7 +80,7 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
         Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
     };
 
-    #[cfg(tracing)]
+    #[cfg(feature="tracing")]
     debug!("rendering HTML");
 
     render_to_html(file_content.as_str())
