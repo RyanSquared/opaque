@@ -9,13 +9,13 @@ use tracing::debug;
 #[derive(thiserror::Error, Debug)]
 pub(crate) enum Error {
     #[error("markdown formatting failed: {0}")]
-    MarkdownFormatError (std::io::Error),
+    MarkdownFormat(std::io::Error),
 
     #[error("invalid UTF-8: {0}")]
-    InvalidUTF8 (#[from] std::string::FromUtf8Error),
+    InvalidUTF8(#[from] std::string::FromUtf8Error),
 
     #[error("File read error: {0}, context?: {1}")]
-    FileReadError(std::io::Error, String)
+    FileRead(std::io::Error, String)
 }
 
 fn create_options() -> ComrakOptions {
@@ -60,7 +60,7 @@ pub(crate) fn render_to_html(input: &str) -> Result<String> {
 
     let mut html = vec![];
     if let Err(e) = format_html(root, &COMRAK_OPTIONS, &mut html) {
-        return Err(Error::MarkdownFormatError(e))
+        return Err(Error::MarkdownFormat(e))
     }
 
     let string = String::from_utf8(html)?;
@@ -72,7 +72,7 @@ pub(crate) async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug
     debug!("reading file");
     let file_content = match tokio::fs::read_to_string(&path).await {
         Ok(content) => content,
-        Err(io_err) => return Err(Error::FileReadError(io_err, format!("path: {path:?}"))),
+        Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
     };
 
     debug!("rendering HTML");

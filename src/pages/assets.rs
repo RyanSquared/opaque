@@ -8,6 +8,7 @@ use include_dir::{include_dir, Dir};
 
 static STATIC_DIR: Dir<'_> = include_dir!("static");
 
+#[allow(clippy::unused_async)]
 pub(crate) async fn static_path(Path(path): axum::extract::Path<String>) -> impl IntoResponse {
     let path = path.trim_start_matches('/');
     let mime_type = mime_guess::from_path(path).first_or_text_plain();
