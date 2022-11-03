@@ -4,6 +4,7 @@ use comrak::{
     parse_document, format_html, Arena, ComrakOptions,
     nodes::AstNode,
 };
+use tracing::debug;
 
 #[derive(thiserror::Error, Debug)]
 pub(crate) enum Error {
@@ -66,11 +67,14 @@ pub(crate) fn render_to_html(input: &str) -> Result<String> {
     Ok(string)
 }
 
-pub(crate) async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Display) -> Result<String> {
+#[tracing::instrument]
+pub(crate) async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+    debug!("reading file");
     let file_content = match tokio::fs::read_to_string(&path).await {
         Ok(content) => content,
-        Err(io_err) => return Err(Error::FileReadError(io_err, format!("path: {path}"))),
+        Err(io_err) => return Err(Error::FileReadError(io_err, format!("path: {path:?}"))),
     };
 
+    debug!("rendering HTML");
     render_to_html(file_content.as_str())
 }
