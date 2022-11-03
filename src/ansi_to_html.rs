@@ -272,7 +272,7 @@ fn rewrite_ansi_to_html(input: &str) -> PreEscaped<String> {
     let mut state = GraphicsModeState::default();
     let mut output = vec![];
 
-    output.push("<pre><code>\n".to_string());
+    output.push("<div class=\"code\"><pre><code>".to_string());
 
     for block in parsed.into_iter() {
         match block {
@@ -288,6 +288,6 @@ fn rewrite_ansi_to_html(input: &str) -> PreEscaped<String> {
         }
     }
 
-    output.push("</code></pre>".to_string());
+    output.push("</code></pre></div>".to_string());
     PreEscaped(output.join(""))
 }

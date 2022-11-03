@@ -50,6 +50,14 @@ body {
 	padding: 0px;
 }
 
+div.code {
+	border: 1px solid var(--color-text);
+}
+
+div.code > pre {
+	margin: 12px;
+}
+
 img {
 	width: 100%;
 }
