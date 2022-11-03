@@ -1,6 +1,5 @@
 use heapless::consts::*;
 use ansi_parser::{Output, AnsiParser, AnsiSequence};
-use maud::PreEscaped;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 enum SgrColor {
@@ -256,7 +255,7 @@ impl GraphicsModeState {
     }
 }
 
-fn rewrite_ansi_to_html(input: &str) -> PreEscaped<String> {
+pub fn rewrite_ansi_to_html(input: &str) -> String {
     let parsed: Vec<Output> = input
         .ansi_parse()
         .filter(|value| {
@@ -289,5 +288,5 @@ fn rewrite_ansi_to_html(input: &str) -> PreEscaped<String> {
     }
 
     output.push("</code></pre></div>".to_string());
-    PreEscaped(output.join(""))
+    output.join("")
 }

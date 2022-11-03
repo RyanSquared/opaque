@@ -914,10 +914,7 @@ dependencies = [
 name = "opaque"
 version = "0.1.0"
 dependencies = [
- "ansi-parser",
  "axum",
- "heapless",
- "html-escape",
  "include_dir",
  "lol_html",
  "maud",
@@ -928,6 +925,15 @@ dependencies = [
  "tower-http",
  "tracing",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "opaque_ansi"
+version = "0.1.0"
+dependencies = [
+ "ansi-parser",
+ "heapless",
+ "html-escape",
 ]
 
 [[package]]

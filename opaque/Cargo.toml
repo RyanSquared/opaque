@@ -29,11 +29,6 @@ tower-http = { version = "0.3.4", features = ["trace", "catch-panic"] }
 tracing = "0.1.35"
 tracing-subscriber = {version = "0.3.11", features = ["env-filter", "fmt", "ansi", "json"]}
 
-# ANSI to HTML
-ansi-parser = "0.8.0"
-heapless = "0.5"
-html-escape = "0.2.12"
-
 # Workspace
 opaque_markdown = { version = "0.1.0", path = "../opaque_markdown" }
 

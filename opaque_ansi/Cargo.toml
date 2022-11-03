@@ -1,0 +1,11 @@
+[package]
+name = "opaque_ansi"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ansi-parser = "0.8.0"
+heapless = "0.5"
+html-escape = "0.2.12"
