@@ -7,7 +7,7 @@ use tracing::debug;
 use opaque_markdown::render_path_to_html;
 
 use crate::state::State;
-use crate::rewrite_links::rewrite_links;
+use crate::postprocessing::rewrite_links;
 
 pub(crate) mod assets;
 
