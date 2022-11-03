@@ -12,7 +12,6 @@ use axum::{Router, Extension, routing::get};
 
 mod state;
 mod pages;
-mod posts;
 mod ansi_to_html;
 mod postprocessing;
 
