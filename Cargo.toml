@@ -32,3 +32,6 @@ lazy_static = "1.4.0"
 comrak = { version = "0.14.0", features = ["syntect"], default-features = false }
 thiserror = "1.0.37"
 lol_html = "0.3.1"
+ansi-parser = "0.8.0"
+heapless = "0.5"
+html-escape = "0.2.12"

@@ -14,6 +14,7 @@ mod state;
 mod pages;
 mod posts;
 mod rewrite_links;
+mod ansi_to_html;
 
 fn setup_registry() {
     let envfilter = EnvFilter::builder()
