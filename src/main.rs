@@ -2,6 +2,7 @@ use std::sync::Arc;
 use std::net::SocketAddr;
 
 use tower_http::trace::TraceLayer;
+use tower_http::catch_panic::CatchPanicLayer;
 use tracing::info;
 use tracing_subscriber::filter::{EnvFilter, LevelFilter};
 use tracing_subscriber::prelude::*;
@@ -42,6 +43,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(pages::index))
         .route("/static/*path", get(pages::assets::static_path))
+        .layer(CatchPanicLayer::new())
         .layer(Extension(Arc::new(state)))
         .layer(TraceLayer::new_for_http());
 
