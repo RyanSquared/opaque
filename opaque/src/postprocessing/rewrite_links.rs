@@ -10,13 +10,11 @@ impl RewriteLinks {
     pub(crate) fn new(url: String, attribute: String) -> Self {
         RewriteLinks { url, attribute }
     }
+}
 
-    pub(crate) fn build(
-        self,
-    ) -> impl FnMut(
-        &mut lol_html::html_content::Element,
-    ) -> Result<(), Box<(dyn std::error::Error + Send + Sync)>> {
-        move |el| {
+impl super::PostProcessor for RewriteLinks {
+    fn build(self) -> super::Closure {
+        Box::new(move |el| {
             let _span = span!(target: "rewrite_links", Level::INFO, "rewrite_links").entered();
             if let Some(src) = el.get_attribute(self.attribute.as_str()) {
                 let url = &self.url;
@@ -27,6 +25,6 @@ impl RewriteLinks {
             } else {
                 Ok(())
             }
-        }
+        })
     }
 }

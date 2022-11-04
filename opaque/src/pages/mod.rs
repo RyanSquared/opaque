@@ -21,11 +21,12 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Markup {
     let content = render_path_to_html(content_file).await.expect("yike");
 
     debug!("creating builder");
-    let settings = PostProcessingBuilder::default().rewrite_links(
-        "img[src]".to_string(),
-        state.url.clone(),
-        None,
-    ).expect("selector wasn't properly parsed").build();
+    let settings = PostProcessingBuilder::default()
+        .rewrite_links("img[src]".to_string(), state.url.clone(), None)
+        .expect("selector wasn't properly parsed")
+        .convert_ansi("opaque-ansi-output".to_string(), "output_snippets/".to_string())
+        .unwrap()
+        .build();
 
     debug!("rewriting content");
     let content_rewritten = lol_html::rewrite_str(content.as_str(), settings).expect("yoke");

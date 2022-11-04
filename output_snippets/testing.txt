@@ -1,0 +1,227 @@
+[1m[32m   Compiling[0m[39m[49m libc v0.2.137
+[1m[32m   Compiling[0m[39m[49m proc-macro2 v1.0.47
+[1m[32m   Compiling[0m[39m[49m cfg-if v1.0.0
+[1m[32m   Compiling[0m[39m[49m quote v1.0.21
+[1m[32m   Compiling[0m[39m[49m unicode-ident v1.0.5
+[1m[32m   Compiling[0m[39m[49m version_check v0.9.4
+[1m[32m   Compiling[0m[39m[49m syn v1.0.103
+[1m[32m   Compiling[0m[39m[49m autocfg v1.1.0
+[1m[32m   Compiling[0m[39m[49m once_cell v1.16.0
+[1m[32m   Compiling[0m[39m[49m memchr v2.5.0
+[1m[32m   Compiling[0m[39m[49m itoa v1.0.4
+[1m[32m   Compiling[0m[39m[49m log v0.4.17
+[1m[32m   Compiling[0m[39m[49m typenum v1.15.0
+[1m[32m   Compiling[0m[39m[49m getrandom v0.1.16
+[1m[32m   Compiling[0m[39m[49m bytes v1.2.1
+[1m[32m   Compiling[0m[39m[49m pin-project-lite v0.2.9
+[1m[32m   Compiling[0m[39m[49m smallvec v1.10.0
+[1m[32m   Compiling[0m[39m[49m fnv v1.0.7
+[1m[32m   Compiling[0m[39m[49m serde v1.0.147
+[1m[32m   Compiling[0m[39m[49m ppv-lite86 v0.2.16
+[1m[32m   Compiling[0m[39m[49m cc v1.0.74
+[1m[32m   Compiling[0m[39m[49m futures-core v0.3.25
+[1m[32m   Compiling[0m[39m[49m bitflags v1.3.2
+[1m[32m   Compiling[0m[39m[49m siphasher v0.3.10
+[1m[32m   Compiling[0m[39m[49m thiserror v1.0.37
+[1m[32m   Compiling[0m[39m[49m futures-task v0.3.25
+[1m[32m   Compiling[0m[39m[49m parking_lot_core v0.9.4
+[1m[32m   Compiling[0m[39m[49m tracing-core v0.1.30
+[1m[32m   Compiling[0m[39m[49m futures-util v0.3.25
+[1m[32m   Compiling[0m[39m[49m scopeguard v1.1.0
+[1m[32m   Compiling[0m[39m[49m regex-syntax v0.6.27
+[1m[32m   Compiling[0m[39m[49m phf_shared v0.8.0
+[1m[32m   Compiling[0m[39m[49m serde_json v1.0.87
+[1m[32m   Compiling[0m[39m[49m pin-utils v0.1.0
+[1m[32m   Compiling[0m[39m[49m ryu v1.0.11
+[1m[32m   Compiling[0m[39m[49m pkg-config v0.3.26
+[1m[32m   Compiling[0m[39m[49m stable_deref_trait v1.2.0
+[1m[32m   Compiling[0m[39m[49m proc-macro-hack v0.5.19
+[1m[32m   Compiling[0m[39m[49m generic-array v0.14.6
+[1m[32m   Compiling[0m[39m[49m ahash v0.7.6
+[1m[32m   Compiling[0m[39m[49m adler v1.0.2
+[1m[32m   Compiling[0m[39m[49m byteorder v1.4.3
+[1m[32m   Compiling[0m[39m[49m lock_api v0.4.9
+[1m[32m   Compiling[0m[39m[49m slab v0.4.7
+[1m[32m   Compiling[0m[39m[49m http v0.2.8
+[1m[32m   Compiling[0m[39m[49m tokio v1.21.2
+[1m[32m   Compiling[0m[39m[49m lazy_static v1.4.0
+[1m[32m   Compiling[0m[39m[49m miniz_oxide v0.5.4
+[1m[32m   Compiling[0m[39m[49m indexmap v1.9.1
+[1m[32m   Compiling[0m[39m[49m safemem v0.3.3
+[1m[32m   Compiling[0m[39m[49m base64 v0.13.1
+[1m[32m   Compiling[0m[39m[49m ucd-trie v0.1.5
+[1m[32m   Compiling[0m[39m[49m crc32fast v1.3.2
+[1m[32m   Compiling[0m[39m[49m tower-service v0.3.2
+[1m[32m   Compiling[0m[39m[49m unicase v2.6.0
+[1m[32m   Compiling[0m[39m[49m proc-macro-error-attr v1.0.4
+[1m[32m   Compiling[0m[39m[49m aho-corasick v0.7.19
+[1m[32m   Compiling[0m[39m[49m mime v0.3.16
+[1m[32m   Compiling[0m[39m[49m serde_derive v1.0.147
+[1m[32m   Compiling[0m[39m[49m tower-layer v0.3.2
+[1m[32m   Compiling[0m[39m[49m version_check v0.1.5
+[1m[32m   Compiling[0m[39m[49m bit-vec v0.6.3
+[1m[32m   Compiling[0m[39m[49m num_threads v0.1.6
+[1m[32m   Compiling[0m[39m[49m async-trait v0.1.58
+[1m[32m   Compiling[0m[39m[49m time-core v0.1.0
+[1m[32m   Compiling[0m[39m[49m line-wrap v0.1.1
+[1m[32m   Compiling[0m[39m[49m proc-macro-error v1.0.4
+[1m[32m   Compiling[0m[39m[49m lazycell v1.3.0
+[1m[32m   Compiling[0m[39m[49m getrandom v0.2.8
+[1m[32m   Compiling[0m[39m[49m socket2 v0.4.7
+[1m[32m   Compiling[0m[39m[49m mio v0.8.5
+[1m[32m   Compiling[0m[39m[49m num_cpus v1.14.0
+[1m[32m   Compiling[0m[39m[49m signal-hook-registry v1.4.0
+[1m[32m   Compiling[0m[39m[49m rand_core v0.5.1
+[1m[32m   Compiling[0m[39m[49m http-body v0.4.5
+[1m[32m   Compiling[0m[39m[49m nom v4.2.3
+[1m[32m   Compiling[0m[39m[49m bit-set v0.5.3
+[1m[32m   Compiling[0m[39m[49m time v0.3.16
+[1m[32m   Compiling[0m[39m[49m parking_lot v0.12.1
+[1m[32m   Compiling[0m[39m[49m dirs-sys v0.3.7
+[1m[32m   Compiling[0m[39m[49m dtoa v0.4.8
+[1m[32m   Compiling[0m[39m[49m futures-channel v0.3.25
+[1m[32m   Compiling[0m[39m[49m rand_chacha v0.2.2
+[1m[32m   Compiling[0m[39m[49m rand_pcg v0.2.1
+[1m[32m   Compiling[0m[39m[49m hashbrown v0.12.3
+[1m[32m   Compiling[0m[39m[49m rand v0.7.3
+[1m[32m   Compiling[0m[39m[49m generic-array v0.13.3
+[1m[32m   Compiling[0m[39m[49m generic-array v0.12.4
+[1m[32m   Compiling[0m[39m[49m heapless v0.5.6
+[1m[32m   Compiling[0m[39m[49m linked-hash-map v0.5.6
+[1m[32m   Compiling[0m[39m[49m same-file v1.0.6
+[1m[32m   Compiling[0m[39m[49m xml-rs v0.8.4
+[1m[32m   Compiling[0m[39m[49m unicode-width v0.1.10
+[1m[32m   Compiling[0m[39m[49m itoa v0.4.8
+[1m[32m   Compiling[0m[39m[49m regex v1.6.0
+[1m[32m   Compiling[0m[39m[49m crypto-common v0.1.6
+[1m[32m   Compiling[0m[39m[49m block-buffer v0.10.3
+[1m[32m   Compiling[0m[39m[49m httparse v1.8.0
+[1m[32m   Compiling[0m[39m[49m textwrap v0.11.0
+[1m[32m   Compiling[0m[39m[49m dtoa-short v0.3.3
+[1m[32m   Compiling[0m[39m[49m walkdir v2.3.2
+[1m[32m   Compiling[0m[39m[49m as-slice v0.1.5
+[1m[32m   Compiling[0m[39m[49m dirs v4.0.0
+[1m[32m   Compiling[0m[39m[49m yaml-rust v0.4.5
+[1m[32m   Compiling[0m[39m[49m digest v0.10.5
+[1m[32m   Compiling[0m[39m[49m flate2 v1.0.24
+[1m[32m   Compiling[0m[39m[49m atty v0.2.14
+[1m[32m   Compiling[0m[39m[49m hash32 v0.1.1
+[1m[32m   Compiling[0m[39m[49m convert_case v0.4.0
+[1m[32m   Compiling[0m[39m[49m vec_map v0.8.2
+[1m[32m   Compiling[0m[39m[49m matches v0.1.9
+[1m[32m   Compiling[0m[39m[49m nodrop v0.1.14
+[1m[32m   Compiling[0m[39m[49m strsim v0.8.0
+[1m[32m   Compiling[0m[39m[49m try-lock v0.2.3
+[1m[32m   Compiling[0m[39m[49m gimli v0.26.2
+[1m[32m   Compiling[0m[39m[49m encoding_rs v0.8.31
+[1m[32m   Compiling[0m[39m[49m percent-encoding v2.2.0
+[1m[32m   Compiling[0m[39m[49m onig_sys v69.8.1
+[1m[32m   Compiling[0m[39m[49m backtrace v0.3.66
+[1m[32m   Compiling[0m[39m[49m phf_generator v0.8.0
+[1m[32m   Compiling[0m[39m[49m httpdate v1.0.2
+[1m[32m   Compiling[0m[39m[49m cpufeatures v0.2.5
+[1m[32m   Compiling[0m[39m[49m ansi_term v0.12.1
+[1m[32m   Compiling[0m[39m[49m phf_codegen v0.8.0
+[1m[32m   Compiling[0m[39m[49m sha1 v0.10.5
+[1m[32m   Compiling[0m[39m[49m form_urlencoded v1.1.0
+[1m[32m   Compiling[0m[39m[49m want v0.3.0
+[1m[32m   Compiling[0m[39m[49m servo_arc v0.1.1
+[1m[32m   Compiling[0m[39m[49m mime_guess v2.0.4
+[1m[32m   Compiling[0m[39m[49m clap v2.34.0
+[1m[32m   Compiling[0m[39m[49m selectors v0.22.0
+[1m[32m   Compiling[0m[39m[49m xdg v2.4.1
+[1m[32m   Compiling[0m[39m[49m regex-automata v0.1.10
+[1m[32m   Compiling[0m[39m[49m headers-core v0.2.0
+[1m[32m   Compiling[0m[39m[49m object v0.29.0
+[1m[32m   Compiling[0m[39m[49m fxhash v0.2.1
+[1m[32m   Compiling[0m[39m[49m utf8-width v0.1.6
+[1m[32m   Compiling[0m[39m[49m thin-slice v0.1.1
+[1m[32m   Compiling[0m[39m[49m typed-arena v1.7.0
+[1m[32m   Compiling[0m[39m[49m http-range-header v0.3.0
+[1m[32m   Compiling[0m[39m[49m precomputed-hash v0.1.1
+[1m[32m   Compiling[0m[39m[49m shell-words v1.1.0
+[1m[32m   Compiling[0m[39m[49m anyhow v1.0.66
+[1m[32m   Compiling[0m[39m[49m unicode_categories v0.1.1
+[1m[32m   Compiling[0m[39m[49m rustc-demangle v0.1.21
+[1m[32m   Compiling[0m[39m[49m fancy-regex v0.7.1
+[1m[32m   Compiling[0m[39m[49m entities v1.0.1
+[1m[32m   Compiling[0m[39m[49m overload v0.1.1
+[1m[32m   Compiling[0m[39m[49m html-escape v0.2.12
+[1m[32m   Compiling[0m[39m[49m headers v0.3.8
+[1m[32m   Compiling[0m[39m[49m nu-ansi-term v0.46.0
+[1m[32m   Compiling[0m[39m[49m include_dir_macros v0.7.3
+[1m[32m   Compiling[0m[39m[49m tracing-log v0.1.3
+[1m[32m   Compiling[0m[39m[49m sharded-slab v0.1.4
+[1m[32m   Compiling[0m[39m[49m bincode v1.3.3
+[1m[32m   Compiling[0m[39m[49m plist v1.3.1
+[1m[32m   Compiling[0m[39m[49m matchers v0.1.0
+[1m[32m   Compiling[0m[39m[49m tracing-serde v0.1.3
+[1m[32m   Compiling[0m[39m[49m serde_urlencoded v0.7.1
+[1m[32m   Compiling[0m[39m[49m ansi-parser v0.8.0
+[1m[32m   Compiling[0m[39m[49m thread_local v1.1.4
+[1m[32m   Compiling[0m[39m[49m matchit v0.5.0
+[1m[32m   Compiling[0m[39m[49m sync_wrapper v0.1.1
+[1m[32m   Compiling[0m[39m[49m include_dir v0.7.3
+[1m[32m   Compiling[0m[39m[49m opaque_ansi v0.1.0 (/home/ryan/builds/opaque/opaque_ansi)
+[1m[32m   Compiling[0m[39m[49m addr2line v0.17.0
+[1m[32m   Compiling[0m[39m[49m thiserror-impl v1.0.37
+[1m[32m   Compiling[0m[39m[49m tracing-attributes v0.1.23
+[1m[32m   Compiling[0m[39m[49m tokio-macros v1.8.0
+[1m[32m   Compiling[0m[39m[49m pin-project-internal v1.0.12
+[1m[32m   Compiling[0m[39m[49m cssparser v0.27.2
+[1m[32m   Compiling[0m[39m[49m phf_macros v0.8.0
+[1m[32m   Compiling[0m[39m[49m cssparser-macros v0.6.0
+[1m[32m   Compiling[0m[39m[49m derive_more v0.99.17
+[1m[32m   Compiling[0m[39m[49m maud_macros v0.24.0
+[1m[32m   Compiling[0m[39m[49m onig v6.4.0
+[1m[32m   Compiling[0m[39m[49m phf v0.8.0
+[1m[32m   Compiling[0m[39m[49m pin-project v1.0.12
+[1m[32m   Compiling[0m[39m[49m tracing v0.1.37
+[1m[32m   Compiling[0m[39m[49m axum-core v0.2.9
+[1m[32m   Compiling[0m[39m[49m pest v2.4.0
+[1m[32m   Compiling[0m[39m[49m tracing-subscriber v0.3.16
+[1m[32m   Compiling[0m[39m[49m pest_meta v2.4.0
+[1m[32m   Compiling[0m[39m[49m syntect v4.6.0
+[1m[32m   Compiling[0m[39m[49m maud v0.24.0
+[1m[32m   Compiling[0m[39m[49m pest_generator v2.4.0
+[1m[32m   Compiling[0m[39m[49m pest_derive v2.4.0
+[1m[32m   Compiling[0m[39m[49m tower v0.4.13
+[1m[32m   Compiling[0m[39m[49m hyper v0.14.22
+[1m[32m   Compiling[0m[39m[49m lol_html v0.3.1
+[1m[32m   Compiling[0m[39m[49m tower-http v0.3.4
+[1m[32m   Compiling[0m[39m[49m comrak v0.14.0
+[1m[32m   Compiling[0m[39m[49m opaque_markdown v0.1.0 (/home/ryan/builds/opaque/opaque_markdown)
+[1m[32m   Compiling[0m[39m[49m axum v0.5.17
+[1m[32m   Compiling[0m[39m[49m opaque v0.1.0 (/home/ryan/builds/opaque/opaque)
+[1m[32m    Finished[0m[39m[49m dev [unoptimized + debuginfo] target(s) in 17.79s
+[1m[32m     Running[0m[39m[49m `target/debug/opaque`
+[2m2022-11-04T06:02:35.978438Z[0m[39m[49m [32m INFO[39m [2mopaque:[0m[39m[49m everything becomes clear
+[2m2022-11-04T06:02:35.978588Z[0m[39m[49m [32m INFO[39m [2mopaque:[0m[39m[49m serving on: 0.0.0.0:8000
+[2m2022-11-04T06:02:36.811328Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::io:[0m[39m[49m parsed 13 headers
+[2m2022-11-04T06:02:36.811362Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::conn:[0m[39m[49m incoming body is empty
+[2m2022-11-04T06:02:36.811511Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::on_request:[0m[39m[49m started processing request
+[2m2022-11-04T06:02:36.811591Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0m[39m[49m [2mopaque::pages:[0m[39m[49m loading content from: content/posts/2022-09-23-an-inescapable-hell-of-networking.md
+[2m2022-11-04T06:02:36.811639Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrender_path_to_html{[0;3m[39m[49mpath[0;2m[39m[49m=[0m[39m[49m"content/posts/2022-09-23-an-inescapable-hell-of-networking.md"[1m}[0;2m[39m[49m:[0m[39m[49m [2mopaque_markdown:[0m[39m[49m reading file
+[2m2022-11-04T06:02:36.811831Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrender_path_to_html{[0;3m[39m[49mpath[0;2m[39m[49m=[0m[39m[49m"content/posts/2022-09-23-an-inescapable-hell-of-networking.md"[1m}[0;2m[39m[49m:[0m[39m[49m [2mopaque_markdown:[0m[39m[49m rendering HTML
+[2m2022-11-04T06:02:36.817191Z[0m[39m[49m [32m INFO[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrender_path_to_html{[0;3m[39m[49mpath[0;2m[39m[49m=[0m[39m[49m"content/posts/2022-09-23-an-inescapable-hell-of-networking.md"[1m}[0;2m[39m[49m:[0m[39m[49m [2mopaque_markdown:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m5.45ms [3mtime.idle[0;2m[39m[49m=[0m[39m[49m108µs
+[2m2022-11-04T06:02:36.817228Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0m[39m[49m [2mopaque::pages:[0m[39m[49m creating builder
+[2m2022-11-04T06:02:36.817308Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0m[39m[49m [2mopaque::pages:[0m[39m[49m rewriting content
+[2m2022-11-04T06:02:36.817483Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrewrite_links[0;2m[39m[49m:[0m[39m[49m [2mopaque::postprocessing::rewrite_links:[0m[39m[49m rewriting from: https://ryansquared.pub, to: https://ryansquared.pub/assets/images/2022/09/an-inescapable-hell-of-net
+working-hero.png
+[2m2022-11-04T06:02:36.817513Z[0m[39m[49m [32m INFO[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrewrite_links[0;2m[39m[49m:[0m[39m[49m [2mrewrite_links:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m42.8µs [3mtime.idle[0;2m[39m[49m=[0m[39m[49m4.58µs
+[2m2022-11-04T06:02:36.817586Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mconvert_ansi[0;2m[39m[49m:[0m[39m[49m [2mopaque::postprocessing::convert_ansi:[0m[39m[49m loading ANSI output file [3mfilename[0;2m[39m[49m=[0m[39m[49m"/output_snippets/testing.txt"
+[2m2022-11-04T06:02:36.817643Z[0m[39m[49m [32m INFO[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mconvert_ansi[0;2m[39m[49m:[0m[39m[49m [2mconvert_ansi:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m61.9µs [3mtime.idle[0;2m[39m[49m=[0m[39m[49m4.35µs
+[2m2022-11-04T06:02:36.817875Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrewrite_links[0;2m[39m[49m:[0m[39m[49m [2mopaque::postprocessing::rewrite_links:[0m[39m[49m rewriting from: https://ryansquared.pub, to: https://ryansquared.pub/assets/images/2022/09/clawing-up-from-hell-foote
+r.png
+[2m2022-11-04T06:02:36.817902Z[0m[39m[49m [32m INFO[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0;1m[39m[49mrewrite_links[0;2m[39m[49m:[0m[39m[49m [2mrewrite_links:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m32.9µs [3mtime.idle[0;2m[39m[49m=[0m[39m[49m4.36µs
+[2m2022-11-04T06:02:36.817950Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0m[39m[49m [2mopaque::pages:[0m[39m[49m returning html body
+[2m2022-11-04T06:02:36.817996Z[0m[39m[49m [32m INFO[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0;1m[39m[49mindex[0;2m[39m[49m:[0m[39m[49m [2mopaque::pages:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m6.31ms [3mtime.idle[0;2m[39m[49m=[0m[39m[49m102µs
+[2m2022-11-04T06:02:36.818067Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::on_response:[0m[39m[49m finished processing request [3mlatency[0;2m[39m[49m=[0m[39m[49m6 ms [3mstatus[0;2m[39m[49m=[0m[39m[49m200
+[2m2022-11-04T06:02:36.818121Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/ [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::make_span:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m6.49ms [3mtime.idle[0;2m[39m[49m=[0m[39m[49m133µs
+[2m2022-11-04T06:02:36.818184Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::io:[0m[39m[49m flushed 10551 bytes
+[2m2022-11-04T06:02:36.838806Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::io:[0m[39m[49m parsed 13 headers
+[2m2022-11-04T06:02:36.838851Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::conn:[0m[39m[49m incoming body is empty
+[2m2022-11-04T06:02:36.839059Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/static/assets/main.css [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::on_request:[0m[39m[49m started processing request
+[2m2022-11-04T06:02:36.839220Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/static/assets/main.css [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::on_response:[0m[39m[49m finished processing request [3mlatency[0;2m[39m[49m=[0m[39m[49m0 ms [3mstatus[0;2m[39m[49m=[0m[39m[49m200
+[2m2022-11-04T06:02:36.839307Z[0m[39m[49m [34mDEBUG[39m [1mrequest{[0;3m[39m[49mmethod[0;2m[39m[49m=[0m[39m[49mGET [3muri[0;2m[39m[49m=[0m[39m[49m/static/assets/main.css [3mversion[0;2m[39m[49m=[0m[39m[49mHTTP/1.1[1m}[0;2m[39m[49m:[0m[39m[49m [2mtower_http::trace::make_span:[0m[39m[49m close [3mtime.busy[0;2m[39m[49m=[0m[39m[49m201µs [3mtime.idle[0;2m[39m[49m=[0m[39m[49m67.3µs
+[2m2022-11-04T06:02:36.839370Z[0m[39m[49m [34mDEBUG[39m [2mhyper::proto::h1::io:[0m[39m[49m flushed 2795 bytes

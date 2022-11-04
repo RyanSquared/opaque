@@ -1,6 +1,9 @@
 use ansi_parser::{AnsiParser, AnsiSequence, Output};
 use heapless::consts::*;
 
+#[cfg(feature = "tracing")]
+use tracing::debug;
+
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 enum SgrColor {
     #[default]
@@ -256,7 +259,11 @@ impl GraphicsModeState {
     }
 }
 
+#[cfg_attr(feature = "tracing", tracing::instrument(skip(input)))]
 pub fn rewrite_ansi_to_html(input: &str) -> String {
+    #[cfg(feature = "tracing")]
+    debug!("parsing ANSI escape codes");
+
     let parsed: Vec<Output> = input
         .ansi_parse()
         .filter(|value| {
@@ -273,6 +280,9 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
     let mut output = vec![];
 
     output.push("<div class=\"code\"><pre><code>".to_string());
+
+    #[cfg(feature = "tracing")]
+    debug!("converting ANSI escape code and text chunks to HTML");
 
     for block in parsed.into_iter() {
         match block {

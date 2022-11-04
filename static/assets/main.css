@@ -52,10 +52,12 @@ body {
 
 div.code {
 	border: 1px solid var(--color-text);
+	padding: 12px;
 }
 
 div.code > pre {
-	margin: 12px;
+	overflow: auto;
+	margin: 4px;
 }
 
 img {

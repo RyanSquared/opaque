@@ -1,19 +1,26 @@
+use anyhow::{Context, Result};
 use lol_html::{element, RewriteStrSettings};
 
 mod rewrite_links;
 use rewrite_links::RewriteLinks;
 
-#[derive(thiserror::Error, Debug, Clone)]
-pub(crate) enum Error {
-    #[error("A selector was neither parsed from .attribute nor found when initialized")]
-    InvalidSelector,
-}
+mod convert_ansi;
+use convert_ansi::ConvertAnsi;
 
-type Result<T> = std::result::Result<T, Error>;
+type Closure = Box<
+    dyn FnMut(
+        &mut lol_html::html_content::Element,
+    ) -> std::result::Result<(), Box<(dyn std::error::Error + Send + Sync)>>,
+>;
+
+trait PostProcessor {
+    fn build(self) -> Closure;
+}
 
 #[derive(Default)]
 pub(crate) struct PostProcessingBuilder {
     rewrite_links_selector: Vec<(String, RewriteLinks)>,
+    convert_ansi_selector: Vec<(String, ConvertAnsi)>,
 }
 
 impl PostProcessingBuilder {
@@ -24,10 +31,25 @@ impl PostProcessingBuilder {
         attribute: Option<String>,
     ) -> Result<Self> {
         let attribute = attribute
-            .or_else(|| selector.split("[").nth(1).map(|v| String::from(v.trim_end_matches(']'))))
-            .ok_or(Error::InvalidSelector);
-        let rewrite_links = RewriteLinks::new(url, attribute?);
+            .or_else(|| {
+                selector
+                    .split("[")
+                    .nth(1)
+                    .map(|v| String::from(v.trim_end_matches(']')))
+            })
+            .context("An attribute could not be derived from selector")?;
+        let rewrite_links = RewriteLinks::new(url, attribute);
         self.rewrite_links_selector.push((selector, rewrite_links));
+        Ok(self)
+    }
+
+    pub(crate) fn convert_ansi(
+        mut self,
+        selector: String,
+        source_file_path: String,
+    ) -> Result<Self> {
+        self.convert_ansi_selector
+            .push((selector, ConvertAnsi::new(source_file_path)?));
         Ok(self)
     }
 
@@ -36,6 +58,10 @@ impl PostProcessingBuilder {
 
         for (selector, rewrite_links) in self.rewrite_links_selector.clone() {
             element_content_handlers.push(element!(selector, rewrite_links.build()));
+        }
+
+        for (selector, convert_ansi) in self.convert_ansi_selector.clone() {
+            element_content_handlers.push(element!(selector, convert_ansi.build()));
         }
 
         RewriteStrSettings {

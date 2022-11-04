@@ -19,6 +19,9 @@ with harmful intent.
 Image generated from Waifu Diffusion: An inescapable hell of networking, city
 block, cyberpunk, vaporwave, sharp focus, 1980s toyota supra
 
+<opaque-ansi-output source="testing.txt">
+</opaque-ansi-output>
+
 If you've interacted with the Cloud Native Computing Foundation, you may be
 familiar with the [CNCF Landscape]. Beware - opening that link *might* crash
 your computer because of how many assets it has to load. Most of these projects

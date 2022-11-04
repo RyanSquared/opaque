@@ -1,4 +1,4 @@
-FROM rust:1.64 AS builder
+FROM rust:1.65 AS builder
 
 # Note: When in release mode, both of these should be `release`. When in dev
 # mode, these should both be `debug`.
@@ -19,6 +19,7 @@ COPY --from=builder /out/opaque /usr/local/bin/opaque
 
 WORKDIR /usr/share/opaque
 COPY content /usr/share/opaque/content
+COPY output_snippets /usr/share/opaque/output_snippets
 
 EXPOSE 8000
 ENTRYPOINT /usr/local/bin/opaque
