@@ -1,23 +1,10 @@
+use anyhow::Result;
 use comrak::{format_html, nodes::AstNode, parse_document, Arena, ComrakOptions};
 
 #[cfg(feature = "tracing")]
 use tracing::debug;
 
 use std::path::Path;
-
-#[derive(thiserror::Error, Debug)]
-pub enum Error {
-    #[error("markdown formatting failed: {0}")]
-    MarkdownFormat(std::io::Error),
-
-    #[error("invalid UTF-8: {0}")]
-    InvalidUTF8(#[from] std::string::FromUtf8Error),
-
-    #[error("File read error: {0}, context?: {1}")]
-    FileRead(std::io::Error, String),
-}
-
-pub type Result<T> = std::result::Result<T, Error>;
 
 fn create_options() -> ComrakOptions {
     let mut comrak_options = ComrakOptions::default();
@@ -58,9 +45,7 @@ pub fn render_to_html(input: &str) -> Result<String> {
     });
 
     let mut html = vec![];
-    if let Err(e) = format_html(root, &COMRAK_OPTIONS, &mut html) {
-        return Err(Error::MarkdownFormat(e));
-    }
+    format_html(root, &COMRAK_OPTIONS, &mut html)?;
 
     let string = String::from_utf8(html)?;
     Ok(string)
@@ -72,10 +57,7 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
     #[cfg(feature = "tracing")]
     debug!("reading file");
 
-    let file_content = match tokio::fs::read_to_string(&path).await {
-        Ok(content) => content,
-        Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
-    };
+    let file_content = tokio::fs::read_to_string(&path).await?;
 
     #[cfg(feature = "tracing")]
     debug!("rendering HTML");
@@ -88,10 +70,8 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
 pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
     #[cfg(feature = "tracing")]
     debug!("reading file");
-    let file_content = match std::fs::read_to_string(&path) {
-        Ok(content) => content,
-        Err(io_err) => return Err(Error::FileRead(io_err, format!("path: {path:?}"))),
-    };
+    
+    let file_content = std::fs::read_to_string(&path)?;
 
     #[cfg(feature = "tracing")]
     debug!("rendering HTML");

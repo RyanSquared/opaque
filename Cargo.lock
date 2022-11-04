@@ -992,6 +992,7 @@ dependencies = [
 name = "opaque_markdown"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "comrak",
  "lazy_static",
  "thiserror",
