@@ -37,3 +37,5 @@ lol_html = "0.3.1"
 
 # Error handling
 thiserror = "1.0.37"
+opaque_ansi = { version = "0.1.0", path = "../opaque_ansi" }
+once_cell = "1.16.0"

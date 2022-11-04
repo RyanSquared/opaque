@@ -28,7 +28,7 @@ impl State {
                 author: Author {
                     name: "RyanSquared".to_string(),
                     email: "me@ryansquared.pub".to_string(),
-                }
+                },
             },
             url: "https://ryansquared.pub".to_string(),
             page_map: vec![],

@@ -1,18 +1,18 @@
-use std::sync::Arc;
 use std::net::SocketAddr;
+use std::sync::Arc;
 
-use tower_http::trace::TraceLayer;
 use tower_http::catch_panic::CatchPanicLayer;
+use tower_http::trace::TraceLayer;
 use tracing::info;
 use tracing_subscriber::filter::{EnvFilter, LevelFilter};
 use tracing_subscriber::fmt::format::FmtSpan;
 use tracing_subscriber::prelude::*;
 
-use axum::{Router, Extension, routing::get};
+use axum::{routing::get, Extension, Router};
 
-mod state;
 mod pages;
 mod postprocessing;
+mod state;
 
 fn setup_registry() {
     let envfilter = EnvFilter::builder()
@@ -36,7 +36,9 @@ async fn main() {
 
     let state = {
         let mut state = state::State::new();
-        state.page_map.push(("About".to_string(), "/about".to_string()));
+        state
+            .page_map
+            .push(("About".to_string(), "/about".to_string()));
         state
     };
 

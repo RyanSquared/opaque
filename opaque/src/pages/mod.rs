@@ -6,8 +6,8 @@ use tracing::debug;
 
 use opaque_markdown::render_path_to_html;
 
+use crate::postprocessing::PostProcessingBuilder;
 use crate::state::State;
-use crate::postprocessing::rewrite_links;
 
 pub(crate) mod assets;
 
@@ -20,8 +20,15 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Markup {
     debug!("loading content from: {content_file}");
     let content = render_path_to_html(content_file).await.expect("yike");
 
+    debug!("creating builder");
+    let settings = PostProcessingBuilder::default().rewrite_links(
+        "img[src]".to_string(),
+        state.url.clone(),
+        None,
+    ).expect("selector wasn't properly parsed").build();
+
     debug!("rewriting content");
-    let content_rewritten = rewrite_links(content.as_ref(), state.url.as_ref()).expect("yoke");
+    let content_rewritten = lol_html::rewrite_str(content.as_str(), settings).expect("yoke");
 
     debug!("returning html body");
     html! {

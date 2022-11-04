@@ -1,9 +1,9 @@
 use axum::extract::Path;
 #[allow(unused_imports)]
 use axum::{
-    response::{Response, IntoResponse},
-    http::StatusCode,
     body::{boxed, Empty, Full},
+    http::StatusCode,
+    response::{IntoResponse, Response},
 };
 
 #[cfg(feature = "bundled_static")]
@@ -30,7 +30,7 @@ pub(crate) async fn static_path(Path(path): axum::extract::Path<String>) -> impl
         None => Response::builder()
             .status(StatusCode::NOT_FOUND)
             .body(boxed(Empty::new()))
-            .expect("unable to build 404 body")
+            .expect("unable to build 404 body"),
     }
 }
 

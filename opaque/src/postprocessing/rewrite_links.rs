@@ -1,38 +1,33 @@
-use lol_html::{rewrite_str, element, RewriteStrSettings};
-use tracing::debug;
+use tracing::{debug, span, Level};
 
-#[derive(thiserror::Error, Debug)]
-pub(crate) enum Error {
-    #[error("Unable to rewrite HTML")]
-    RewriteHtmlFailure(#[from] lol_html::errors::RewritingError),
+#[derive(Debug, Clone)]
+pub(crate) struct RewriteLinks {
+    url: String,
+    attribute: String,
 }
 
-type Result<T> = std::result::Result<T, Error>;
+impl RewriteLinks {
+    pub(crate) fn new(url: String, attribute: String) -> Self {
+        RewriteLinks { url, attribute }
+    }
 
-#[tracing::instrument(skip(input))]
-pub(crate) fn rewrite_links(input: &str, base_url: &str) -> Result<String> {
-    debug!("rewriting page");
-
-    let element_content_handlers = vec![
-        element!("img[src]", |el| {
-            let src = el
-                .get_attribute("src")
-                .expect("img[src] did not have src");
-
-            let result = format!("{base_url}{src}");
-            debug!("link found: {src}; rewriting: {result}");
-
-            // the only thing that can cause an Error here is a memory alloc fail
-            // which is out of scope
-            el.set_attribute("src", result.as_ref()).unwrap();
-            Ok(())
-        })
-    ];
-
-    let result = rewrite_str(input, RewriteStrSettings {
-        element_content_handlers,
-        ..Default::default()
-    })?;
-
-    Ok(result)
+    pub(crate) fn build(
+        self,
+    ) -> impl FnMut(
+        &mut lol_html::html_content::Element,
+    ) -> Result<(), Box<(dyn std::error::Error + Send + Sync)>> {
+        move |el| {
+            let span = span!(Level::TRACE, "rewrite_links");
+            let _enter = span.enter();
+            if let Some(src) = el.get_attribute(self.attribute.as_str()) {
+                let url = &self.url;
+                let rewritten_url = format!("{url}{src}");
+                debug!("rewriting from: {url}, to: {rewritten_url}");
+                let result = el.set_attribute(self.attribute.as_str(), rewritten_url.as_str());
+                result.map_err(|e| Box::new(e) as Box<(dyn std::error::Error + Send + Sync)>)
+            } else {
+                Ok(())
+            }
+        }
+    }
 }

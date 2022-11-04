@@ -1,5 +1,5 @@
+use ansi_parser::{AnsiParser, AnsiSequence, Output};
 use heapless::consts::*;
-use ansi_parser::{Output, AnsiParser, AnsiSequence};
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 enum SgrColor {
@@ -34,7 +34,7 @@ enum StatePath {
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 struct GraphicsModeState {
     // reset is interpreted as resetting everything to default
-    // the methods defined here are taken from: 
+    // the methods defined here are taken from:
     // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
     // and have been selected in accordance with their compatibility with static HTML
     bold: bool,
@@ -49,7 +49,9 @@ struct GraphicsModeState {
     path: StatePath,
 }
 
-static COLORS: [&'static str; 8] = ["black", "red", "green", "yellow", "blue", "purple", "cyan", "gray"];
+static COLORS: [&'static str; 8] = [
+    "black", "red", "green", "yellow", "blue", "purple", "cyan", "gray",
+];
 
 impl GraphicsModeState {
     fn get_tags(&self) -> (String, String) {
@@ -82,54 +84,59 @@ impl GraphicsModeState {
 
         match self.color {
             SgrColor::Console(n @ 0..=7) => {
-                let span = format!("<span style=\"color: var(--color-{})\">", COLORS[n as usize]);
+                let span = format!(
+                    "<span style=\"color: var(--color-{})\">",
+                    COLORS[n as usize]
+                );
                 opening_tags.push(span);
                 closing_tags.push("</span>".to_string())
-            },
-            _ => ()
+            }
+            _ => (),
         }
 
         match self.background_color {
             SgrColor::Console(n @ 0..=7) => {
-                let span = format!("<span style=\"background-color: var(--color-{})\">", COLORS[n as usize]);
+                let span = format!(
+                    "<span style=\"background-color: var(--color-{})\">",
+                    COLORS[n as usize]
+                );
                 opening_tags.push(span);
                 closing_tags.push("</span>".to_string())
-            },
-            _ => ()
+            }
+            _ => (),
         }
 
-        (opening_tags.join(""), closing_tags.into_iter().rev().collect::<Vec<_>>().join(""))
+        (
+            opening_tags.join(""),
+            closing_tags.into_iter().rev().collect::<Vec<_>>().join(""),
+        )
     }
 
     fn get_next_state(self, graphics_mode: heapless::Vec<u8, U5>) -> Self {
         graphics_mode.iter().fold(self, |state, new_mode| {
             match state.path {
-                StatePath::ForegroundMatch => {
-                    match new_mode {
-                        5 => GraphicsModeState {
-                            path: StatePath::ForegroundExpanded,
-                            ..state
-                        },
-                        2 => GraphicsModeState {
-                            path: StatePath::ForegroundTrueOne,
-                            ..state
-                        },
-                        _ => state
-                    }
-                }
-                StatePath::BackgroundMatch => {
-                    match new_mode {
-                        5 => GraphicsModeState {
-                            path: StatePath::BackgroundExpanded,
-                            ..state
-                        },
-                        2 => GraphicsModeState {
-                            path: StatePath::BackgroundTrueOne,
-                            ..state
-                        },
-                        _ => state
-                    }
-                }
+                StatePath::ForegroundMatch => match new_mode {
+                    5 => GraphicsModeState {
+                        path: StatePath::ForegroundExpanded,
+                        ..state
+                    },
+                    2 => GraphicsModeState {
+                        path: StatePath::ForegroundTrueOne,
+                        ..state
+                    },
+                    _ => state,
+                },
+                StatePath::BackgroundMatch => match new_mode {
+                    5 => GraphicsModeState {
+                        path: StatePath::BackgroundExpanded,
+                        ..state
+                    },
+                    2 => GraphicsModeState {
+                        path: StatePath::BackgroundTrueOne,
+                        ..state
+                    },
+                    _ => state,
+                },
                 StatePath::ForegroundExpanded => {
                     return GraphicsModeState {
                         path: StatePath::NextMode,
@@ -137,20 +144,16 @@ impl GraphicsModeState {
                         ..state
                     }
                 }
-                StatePath::BackgroundExpanded => {
-                    GraphicsModeState {
-                        path: StatePath::NextMode,
-                        background_color: SgrColor::ExpandedConsole(*new_mode),
-                        ..state
-                    }
-                }
-                StatePath::ForegroundTrueOne => {
-                    GraphicsModeState {
-                        path: StatePath::ForegroundTrueTwo,
-                        color: SgrColor::True(*new_mode, 0, 0),
-                        ..state
-                    }
-                }
+                StatePath::BackgroundExpanded => GraphicsModeState {
+                    path: StatePath::NextMode,
+                    background_color: SgrColor::ExpandedConsole(*new_mode),
+                    ..state
+                },
+                StatePath::ForegroundTrueOne => GraphicsModeState {
+                    path: StatePath::ForegroundTrueTwo,
+                    color: SgrColor::True(*new_mode, 0, 0),
+                    ..state
+                },
                 StatePath::ForegroundTrueTwo => {
                     if let SgrColor::True(r, _, b) = state.color {
                         return GraphicsModeState {
@@ -171,20 +174,18 @@ impl GraphicsModeState {
                     }
                     panic!("reached a ForegroundTrue state without an SgrColor");
                 }
-                StatePath::BackgroundTrueOne => {
-                    GraphicsModeState {
-                        path: StatePath::BackgroundTrueTwo,
-                        background_color: SgrColor::True(*new_mode, 0, 0),
-                        ..state
-                    }
-                }
+                StatePath::BackgroundTrueOne => GraphicsModeState {
+                    path: StatePath::BackgroundTrueTwo,
+                    background_color: SgrColor::True(*new_mode, 0, 0),
+                    ..state
+                },
                 StatePath::BackgroundTrueTwo => {
                     if let SgrColor::True(r, _, b) = state.background_color {
                         return GraphicsModeState {
                             path: StatePath::BackgroundTrueThree,
                             background_color: SgrColor::True(r, *new_mode, b),
                             ..state
-                        }
+                        };
                     };
                     panic!("reached a BackgroundTrue state without an SgrColor");
                 }
@@ -247,7 +248,7 @@ impl GraphicsModeState {
                             background_color: SgrColor::Reset,
                             ..state
                         },
-                        _ => state
+                        _ => state,
                     }
                 }
             }
@@ -277,12 +278,12 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
         match block {
             Output::Escape(AnsiSequence::SetGraphicsMode(mode)) => {
                 state = state.get_next_state(mode);
-            },
+            }
             Output::TextBlock(text) => {
                 let (opening_tags, closing_tags) = state.get_tags();
                 let text = html_escape::encode_text(text);
                 output.push(format!("{opening_tags}{text}{closing_tags}"));
-            },
+            }
             _ => {}
         }
     }
