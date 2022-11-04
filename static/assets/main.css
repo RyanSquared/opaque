@@ -57,6 +57,8 @@ div.code {
 
 div.code > pre {
 	overflow: auto;
+	/* for the scroll bar */
+	padding-bottom: 1em;
 	margin: 4px;
 }
 

@@ -968,10 +968,8 @@ dependencies = [
  "lol_html",
  "maud",
  "mime_guess",
- "once_cell",
  "opaque_ansi",
  "opaque_markdown",
- "thiserror",
  "tokio",
  "tower-http",
  "tracing",
@@ -995,7 +993,6 @@ dependencies = [
  "anyhow",
  "comrak",
  "lazy_static",
- "thiserror",
  "tokio",
  "tracing",
 ]
