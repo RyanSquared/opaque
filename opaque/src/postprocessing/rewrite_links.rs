@@ -17,8 +17,7 @@ impl RewriteLinks {
         &mut lol_html::html_content::Element,
     ) -> Result<(), Box<(dyn std::error::Error + Send + Sync)>> {
         move |el| {
-            let span = span!(Level::TRACE, "rewrite_links");
-            let _enter = span.enter();
+            let _span = span!(target: "rewrite_links", Level::INFO, "rewrite_links").entered();
             if let Some(src) = el.get_attribute(self.attribute.as_str()) {
                 let url = &self.url;
                 let rewritten_url = format!("{url}{src}");
