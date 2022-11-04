@@ -26,7 +26,6 @@ impl PostProcessingBuilder {
         let attribute = attribute
             .or_else(|| selector.split("[").nth(1).map(|v| String::from(v.trim_end_matches(']'))))
             .ok_or(Error::InvalidSelector);
-        dbg!(&selector, &url, &attribute);
         let rewrite_links = RewriteLinks::new(url, attribute?);
         self.rewrite_links_selector.push((selector, rewrite_links));
         Ok(self)
