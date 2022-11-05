@@ -169,7 +169,7 @@ impl GraphicsModeState {
                 StatePath::ForegroundTrueThree => {
                     if let SgrColor::True(r, g, _) = state.color {
                         return GraphicsModeState {
-                            path: StatePath::ForegroundTrueThree,
+                            path: StatePath::NextMode,
                             color: SgrColor::True(r, g, *new_mode),
                             ..state
                         };
@@ -194,7 +194,7 @@ impl GraphicsModeState {
                 StatePath::BackgroundTrueThree => {
                     if let SgrColor::True(r, g, _) = state.background_color {
                         return GraphicsModeState {
-                            path: StatePath::BackgroundTrueThree,
+                            path: StatePath::NextMode,
                             background_color: SgrColor::True(r, g, *new_mode),
                             ..state
                         };
