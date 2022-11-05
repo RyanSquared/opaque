@@ -93,6 +93,16 @@ impl GraphicsModeState {
                 opening_tags.push(span);
                 closing_tags.push("</span>".to_string())
             }
+            SgrColor::ExpandedConsole(n) => {
+                let span = format!("<span style=\"color: var(--terminal-color-{})\">", n);
+                opening_tags.push(span);
+                closing_tags.push("</span>".to_string())
+            }
+            SgrColor::True(r, g, b) => {
+                let span = format!("<span style=\"color: rgb({r}, {g}, {b})\">");
+                opening_tags.push(span);
+                closing_tags.push("</span>".to_string())
+            }
             _ => (),
         }
 
@@ -102,6 +112,16 @@ impl GraphicsModeState {
                     "<span style=\"background-color: var(--color-{})\">",
                     COLORS[n as usize]
                 );
+                opening_tags.push(span);
+                closing_tags.push("</span>".to_string())
+            }
+            SgrColor::ExpandedConsole(n) => {
+                let span = format!("<span style=\"background-color: var(--terminal-color-{n})\">");
+                opening_tags.push(span);
+                closing_tags.push("</span>".to_string())
+            }
+            SgrColor::True(r, g, b) => {
+                let span = format!("<span style=\"background-color: rgb({r}, {g}, {b})\">");
                 opening_tags.push(span);
                 closing_tags.push("</span>".to_string())
             }
