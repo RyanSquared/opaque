@@ -9,7 +9,6 @@ edition = "2021"
 default = ["tracing"]
 
 [dependencies]
-ansi-parser = "0.8.0"
-heapless = "0.5"
+ansi-parser = { version = "0.9.1", path = "../vendor/ansi-parser" }
 html-escape = "0.2.12"
 tracing = { version = "0.1.37", optional = true }

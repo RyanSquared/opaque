@@ -1,0 +1,3 @@
+[submodule "vendor/ansi-parser"]
+	path = vendor/ansi-parser
+	url = https://github.com/RyanSquared/ansi-parser-rs

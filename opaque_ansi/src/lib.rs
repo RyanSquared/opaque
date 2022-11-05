@@ -1,5 +1,4 @@
 use ansi_parser::{AnsiParser, AnsiSequence, Output};
-use heapless::consts::*;
 
 #[cfg(feature = "tracing")]
 use tracing::debug;
@@ -115,7 +114,7 @@ impl GraphicsModeState {
         )
     }
 
-    fn get_next_state(self, graphics_mode: heapless::Vec<u8, U5>) -> Self {
+    fn get_next_state(self, graphics_mode: ansi_parser::Vec<u8, 5>) -> Self {
         graphics_mode.iter().fold(self, |state, new_mode| {
             match state.path {
                 StatePath::ForegroundMatch => match new_mode {
