@@ -31,70 +31,42 @@ static COLORS: [&'static str; 8] = [
     "black", "red", "green", "yellow", "blue", "purple", "cyan", "gray",
 ];
 
-impl GraphicsModeState {
-    fn clone_from_scan(&self, input: &[u8]) -> Self {
-        let mut state = self.clone();
-        let mut input = &input[..];
+macro_rules! iter_over {
+    ($input:expr; $([$($t:pat_param),*] => $s:expr,)+) => {
+        let mut input = $input;
         loop {
-            // Note: `input @ ..` matches empty, this is good, it means we can move through the
-            // slice without having to potentially make a new slice that's manually wrong
             input = match input {
-                [0, input @ ..] => {
-                    state = GraphicsModeState::default();
-                    input
-                }
-                [1, input @ ..] => {
-                    state.bold = true;
-                    input
-                }
-                [3, input @ ..] => {
-                    state.italic = true;
-                    input
-                }
-                [4, input @ ..] => {
-                    state.underline = true;
-                    input
-                }
-                [9, input @ ..] => {
-                    state.strikethrough = true;
-                    input
-                }
-                [n @ 30..=37, input @ ..] => {
-                    state.color = SgrColor::Console(n - 30);
-                    input
-                }
-                [n @ 40..=47, input @ ..] => {
-                    state.background_color = SgrColor::Console(n - 40);
-                    input
-                }
-                [38, 5, n, input @ ..] => {
-                    state.color = SgrColor::ExpandedConsole(*n);
-                    input
-                }
-                [38, 2, r, g, b, input @ ..] => {
-                    state.color = SgrColor::True(*r, *g, *b);
-                    input
-                }
-                [48, 5, n] => {
-                    state.background_color = SgrColor::ExpandedConsole(*n);
-                    input
-                }
-                [48, 2, r, g, b, input @ ..] => {
-                    state.background_color = SgrColor::True(*r, *g, *b);
-                    input
-                },
-                [39, input @ ..] => {
-                    state.color = SgrColor::Reset;
-                    input
-                }
-                [49, input @ ..] => {
-                    state.color = SgrColor::Reset;
-                    input
-                }
+                $(
+                    [$($t),*, input @ ..] => { $s; input }
+                ),+
                 [_, input @ ..] => input,
                 [] => break,
             }
         }
+    }
+}
+
+impl GraphicsModeState {
+    fn clone_from_scan(&self, input: &[u8]) -> Self {
+        let mut state = self.clone();
+
+        iter_over! {
+            &input[..];
+            [0] => state = GraphicsModeState::default(),
+            [1] => state.bold = true,
+            [3] => state.italic = true,
+            [4] => state.underline = true,
+            [9] => state.strikethrough = true,
+            [n @ 30..=37] => state.color = SgrColor::Console(n - 30),
+            [n @ 40..=47] => state.background_color = SgrColor::Console(n - 40),
+            [38, 5, n] => state.color = SgrColor::ExpandedConsole(*n),
+            [48, 5, n] => state.background_color = SgrColor::ExpandedConsole(*n),
+            [38, 2, r, g, b] => state.color = SgrColor::True(*r, *g, *b),
+            [48, 2, r, g, b] => state.background_color = SgrColor::True(*r, *g, *b),
+            [39] => state.color = SgrColor::Reset,
+            [49] => state.background_color = SgrColor::Reset,
+        }
+        
         state
     }
 
