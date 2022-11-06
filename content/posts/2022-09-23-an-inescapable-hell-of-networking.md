@@ -2,7 +2,7 @@
 layout: post
 title: An Inescapable Hell of Networking
 tags: kubernetes, cni, networking
-date: 2022-09-23 05:05 -0400
+date: 2022-09-23T05:05:00-0400
 ---
 **Note:** The choices I've made are my own and are solely due to how I want to
 learn more about the involved technology. Kubernetes is not the "answer to
