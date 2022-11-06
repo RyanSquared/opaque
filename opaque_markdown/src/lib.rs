@@ -1,5 +1,5 @@
 use anyhow::Result;
-use comrak::{format_html, nodes::AstNode, parse_document, Arena, ComrakOptions};
+use comrak::{format_html, nodes::{AstNode, NodeValue}, parse_document, Arena, ComrakOptions};
 
 #[cfg(feature = "tracing")]
 use tracing::debug;
@@ -35,25 +35,35 @@ where
     }
 }
 
-pub fn render_to_html(input: &str) -> Result<String> {
+pub fn render_to_html(input: &str) -> Result<(String, Option<String>)> {
     // Create an arena for rendering purposes
     let arena = Arena::new();
     let root = parse_document(&arena, input, &COMRAK_OPTIONS);
 
+    let mut front_matter: Option<String> = None;
+
+    // note: this is fine since it's "front" matter.
+    for node in root.children() {
+        if let NodeValue::FrontMatter(v) = node.data.clone().into_inner().value {
+            // note: we get passed a &str, it's not possible to get non-utf8
+            front_matter.replace(String::from_utf8(v).unwrap());
+        }
+    }
+
     iter_nodes(root, &|node| match &mut node.data.borrow_mut().value {
-        _ => (),
+        _ => ()
     });
 
     let mut html = vec![];
     format_html(root, &COMRAK_OPTIONS, &mut html)?;
 
     let string = String::from_utf8(html)?;
-    Ok(string)
+    Ok((string, front_matter))
 }
 
 #[cfg_attr(feature = "tracing", tracing::instrument)]
 #[cfg(feature = "tokio")]
-pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<(String, Option<String>)> {
     #[cfg(feature = "tracing")]
     debug!("reading file");
 
@@ -67,7 +77,7 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
 
 #[cfg_attr(feature = "tracing", tracing::instrument)]
 #[cfg(not(feature = "tokio"))]
-pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<(String, Option<String>)> {
     #[cfg(feature = "tracing")]
     debug!("reading file");
     

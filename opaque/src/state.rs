@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub(crate) struct Author {
     pub(crate) name: String,
     pub(crate) email: String,
@@ -7,12 +10,14 @@ pub(crate) struct Author {
 // Jekyll is configured. Information that goes here is typically information that will be
 // displayed on the header and footer of every page. However, it will *not* include content such
 // as a list of links to display in the nav bar.
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub(crate) struct Config {
     pub(crate) name: String,
     pub(crate) description: String,
     pub(crate) author: Author,
 }
 
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub(crate) struct State {
     pub(crate) config: Config,
     pub(crate) url: String,
