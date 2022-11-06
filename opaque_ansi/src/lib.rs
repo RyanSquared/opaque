@@ -4,33 +4,12 @@ use ansi_parser::{AnsiParser, AnsiSequence, Output};
 use tracing::debug;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
-enum SgrColor {
+pub(crate) enum SgrColor {
     #[default]
     Reset,
     Console(u8),
     ExpandedConsole(u8),
     True(u8, u8, u8),
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Eq)]
-enum StatePath {
-    #[default]
-    NextMode,
-    // Determines whether or not it's Expanded or True
-    ForegroundMatch,
-    BackgroundMatch,
-    // 5, n
-    ForegroundExpanded,
-    // 2, r, g, b
-    ForegroundTrueOne,
-    ForegroundTrueTwo,
-    ForegroundTrueThree,
-    // 5, n
-    BackgroundExpanded,
-    // 2, r, g, b
-    BackgroundTrueOne,
-    BackgroundTrueTwo,
-    BackgroundTrueThree,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
@@ -44,11 +23,8 @@ struct GraphicsModeState {
     underline: bool,
     strikethrough: bool,
 
-    // SgrColor is a tagged enum, match that when in Foreground or Background color
     color: SgrColor,
     background_color: SgrColor,
-
-    path: StatePath,
 }
 
 static COLORS: [&'static str; 8] = [
@@ -56,7 +32,73 @@ static COLORS: [&'static str; 8] = [
 ];
 
 impl GraphicsModeState {
-    fn get_tags(&self) -> (String, String) {
+    fn clone_from_scan(&self, input: &[u8]) -> Self {
+        let mut state = self.clone();
+        let mut input = &input[..];
+        loop {
+            // Note: `input @ ..` matches empty, this is good, it means we can move through the
+            // slice without having to potentially make a new slice that's manually wrong
+            input = match input {
+                [0, input @ ..] => {
+                    state = GraphicsModeState::default();
+                    input
+                }
+                [1, input @ ..] => {
+                    state.bold = true;
+                    input
+                }
+                [3, input @ ..] => {
+                    state.italic = true;
+                    input
+                }
+                [4, input @ ..] => {
+                    state.underline = true;
+                    input
+                }
+                [9, input @ ..] => {
+                    state.strikethrough = true;
+                    input
+                }
+                [n @ 30..=37, input @ ..] => {
+                    state.color = SgrColor::Console(n - 30);
+                    input
+                }
+                [n @ 40..=47, input @ ..] => {
+                    state.background_color = SgrColor::Console(n - 40);
+                    input
+                }
+                [38, 5, n, input @ ..] => {
+                    state.color = SgrColor::ExpandedConsole(*n);
+                    input
+                }
+                [38, 2, r, g, b, input @ ..] => {
+                    state.color = SgrColor::True(*r, *g, *b);
+                    input
+                }
+                [48, 5, n] => {
+                    state.background_color = SgrColor::ExpandedConsole(*n);
+                    input
+                }
+                [48, 2, r, g, b, input @ ..] => {
+                    state.background_color = SgrColor::True(*r, *g, *b);
+                    input
+                },
+                [39, input @ ..] => {
+                    state.color = SgrColor::Reset;
+                    input
+                }
+                [49, input @ ..] => {
+                    state.color = SgrColor::Reset;
+                    input
+                }
+                [_, input @ ..] => input,
+                [] => break,
+            }
+        }
+        state
+    }
+
+    fn build_tags(&self) -> (String, String) {
         if self == &Self::default() {
             return ("".to_string(), "".to_string());
         }
@@ -133,149 +175,6 @@ impl GraphicsModeState {
             closing_tags.into_iter().rev().collect::<Vec<_>>().join(""),
         )
     }
-
-    fn get_next_state(self, graphics_mode: ansi_parser::Vec<u8, 5>) -> Self {
-        graphics_mode.iter().fold(self, |state, new_mode| {
-            match state.path {
-                StatePath::ForegroundMatch => match new_mode {
-                    5 => GraphicsModeState {
-                        path: StatePath::ForegroundExpanded,
-                        ..state
-                    },
-                    2 => GraphicsModeState {
-                        path: StatePath::ForegroundTrueOne,
-                        ..state
-                    },
-                    _ => state,
-                },
-                StatePath::BackgroundMatch => match new_mode {
-                    5 => GraphicsModeState {
-                        path: StatePath::BackgroundExpanded,
-                        ..state
-                    },
-                    2 => GraphicsModeState {
-                        path: StatePath::BackgroundTrueOne,
-                        ..state
-                    },
-                    _ => state,
-                },
-                StatePath::ForegroundExpanded => {
-                    return GraphicsModeState {
-                        path: StatePath::NextMode,
-                        color: SgrColor::ExpandedConsole(*new_mode),
-                        ..state
-                    }
-                }
-                StatePath::BackgroundExpanded => GraphicsModeState {
-                    path: StatePath::NextMode,
-                    background_color: SgrColor::ExpandedConsole(*new_mode),
-                    ..state
-                },
-                StatePath::ForegroundTrueOne => GraphicsModeState {
-                    path: StatePath::ForegroundTrueTwo,
-                    color: SgrColor::True(*new_mode, 0, 0),
-                    ..state
-                },
-                StatePath::ForegroundTrueTwo => {
-                    if let SgrColor::True(r, _, b) = state.color {
-                        return GraphicsModeState {
-                            path: StatePath::ForegroundTrueThree,
-                            color: SgrColor::True(r, *new_mode, b),
-                            ..state
-                        };
-                    }
-                    panic!("reached a ForegroundTrue state without an SgrColor");
-                }
-                StatePath::ForegroundTrueThree => {
-                    if let SgrColor::True(r, g, _) = state.color {
-                        return GraphicsModeState {
-                            path: StatePath::NextMode,
-                            color: SgrColor::True(r, g, *new_mode),
-                            ..state
-                        };
-                    }
-                    panic!("reached a ForegroundTrue state without an SgrColor");
-                }
-                StatePath::BackgroundTrueOne => GraphicsModeState {
-                    path: StatePath::BackgroundTrueTwo,
-                    background_color: SgrColor::True(*new_mode, 0, 0),
-                    ..state
-                },
-                StatePath::BackgroundTrueTwo => {
-                    if let SgrColor::True(r, _, b) = state.background_color {
-                        return GraphicsModeState {
-                            path: StatePath::BackgroundTrueThree,
-                            background_color: SgrColor::True(r, *new_mode, b),
-                            ..state
-                        };
-                    };
-                    panic!("reached a BackgroundTrue state without an SgrColor");
-                }
-                StatePath::BackgroundTrueThree => {
-                    if let SgrColor::True(r, g, _) = state.background_color {
-                        return GraphicsModeState {
-                            path: StatePath::NextMode,
-                            background_color: SgrColor::True(r, g, *new_mode),
-                            ..state
-                        };
-                    }
-                    panic!("reached a BackgroundTrue state without an SgrColor");
-                }
-                StatePath::NextMode => {
-                    // Parse the next color like normal
-                    match new_mode {
-                        // Instead of using GraphicsModeState::default(), this can be
-                        // picked up by the optimizer to reuse the existing, soon to be
-                        // dropped, GraphicsModeState
-                        0 => GraphicsModeState {
-                            ..Default::default()
-                        },
-                        1 => GraphicsModeState {
-                            bold: true,
-                            ..state
-                        },
-                        3 => GraphicsModeState {
-                            italic: true,
-                            ..state
-                        },
-                        4 => GraphicsModeState {
-                            underline: true,
-                            ..state
-                        },
-                        9 => GraphicsModeState {
-                            strikethrough: true,
-                            ..state
-                        },
-                        30..=37 => GraphicsModeState {
-                            color: SgrColor::Console(new_mode - 30),
-                            ..state
-                        },
-                        40..=47 => GraphicsModeState {
-                            background_color: SgrColor::Console(new_mode - 40),
-                            ..state
-                        },
-                        38 => GraphicsModeState {
-                            path: StatePath::ForegroundMatch,
-                            ..state
-                        },
-                        48 => GraphicsModeState {
-                            path: StatePath::BackgroundMatch,
-                            ..state
-                        },
-                        39 => GraphicsModeState {
-                            color: SgrColor::Reset,
-                            ..state
-                        },
-                        49 => GraphicsModeState {
-                            background_color: SgrColor::Reset,
-                            ..state
-                        },
-                        _ => state,
-                    }
-                }
-            }
-        })
-    }
 }
 
 #[cfg_attr(feature = "tracing", tracing::instrument(skip(input)))]
@@ -306,10 +205,10 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
     for block in parsed.into_iter() {
         match block {
             Output::Escape(AnsiSequence::SetGraphicsMode(mode)) => {
-                state = state.get_next_state(mode);
+                state = state.clone_from_scan(&mode[..]);
             }
             Output::TextBlock(text) => {
-                let (opening_tags, closing_tags) = state.get_tags();
+                let (opening_tags, closing_tags) = state.build_tags();
                 let text = html_escape::encode_text(text);
                 output.push(format!("{opening_tags}{text}{closing_tags}"));
             }
