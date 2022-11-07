@@ -52,7 +52,7 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Markup {
                 (components::header(&state))
                 main {
                     .content {
-                        "hi!"
+                        (components::posts::post_list(&state, Some(5), Some("Recent Posts")))
                     }
                 }
                 (components::footer(&state))

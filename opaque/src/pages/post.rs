@@ -22,12 +22,12 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Result {
     Ok(html! {
         (DOCTYPE)
         html {
-            (components::head("Post Index - Unused"))
+            (components::head("Post Index"))
             body {
                 (components::header(&state))
                 main {
                     .content {
-                        (components::posts::post_list(&state, Some(5)))
+                        (components::posts::post_list(&state, None, None))
                     }
                 }
             }

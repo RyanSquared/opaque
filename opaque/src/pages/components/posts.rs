@@ -5,11 +5,11 @@ use maud::{html, Markup};
 
 use crate::state::State;
 
-pub(crate) fn post_list(state: &Extension<Arc<State>>, post_limit: Option<usize>) -> Markup {
+pub(crate) fn post_list(state: &Extension<Arc<State>>, post_limit: Option<usize>, header: Option<&str>) -> Markup {
     let post_limit = post_limit.unwrap_or(usize::MAX);
     let posts = state.sorted_posts();
     html! {
-        h1 { "Posts" }
+        h1 { (header.unwrap_or("Posts")) }
         @for post in posts.iter().take(post_limit) {
             div.post {
                 small {
