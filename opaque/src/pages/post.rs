@@ -68,7 +68,7 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
 
     debug!("creating postprocessing builder");
     let settings = PostProcessingBuilder::default()
-        .rewrite_links("img[src]".to_string(), state.url.clone(), None)
+        .rewrite_links("img[src]".to_string(), "/static/".into(), None)
         .expect("selector wasn't properly parsed")
         .convert_ansi(
             "opaque-ansi-output".to_string(),
