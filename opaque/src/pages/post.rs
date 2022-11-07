@@ -2,6 +2,8 @@ use std::sync::Arc;
 
 use axum::{extract::Path, Extension};
 use maud::{html, PreEscaped, DOCTYPE};
+use once_cell::sync::OnceCell;
+use tokio::sync::Mutex;
 use tracing::debug;
 
 use opaque_markdown::render_path_to_html;
@@ -9,6 +11,10 @@ use opaque_markdown::render_path_to_html;
 use super::{components, Error, Result};
 use crate::postprocessing::PostProcessingBuilder;
 use crate::state::State;
+
+// Note: the cache doesn't need to be held across async yield boundaries, but tokio::sync::Mutex is
+// still required over parking_lot::Mutex
+static CACHE: OnceCell<Mutex<uluru::LRUCache<(String, String), 32>>> = OnceCell::new();
 
 #[tracing::instrument(skip(state))]
 #[cfg_attr(debug_assertions, axum_macros::debug_handler)]
@@ -46,8 +52,19 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
         .as_ref()
         .unwrap_or(&state.config.author);
 
-    debug!("rendering path to HTML");
-    let content = render_path_to_html(post.file_path.as_path()).await?;
+    let mut cache = CACHE.get_or_init(|| Mutex::new(uluru::LRUCache::default())).lock().await;
+
+    let content = match cache.find(|(k, _)| post_slug == *k) {
+        Some((_, hit)) => {
+            debug!(?post_slug, "markdown: cache hit");
+            hit.clone()
+        },
+        None => {
+            let content = render_path_to_html(post.file_path.as_path()).await?;
+            cache.insert((post_slug.clone(), content.clone()));
+            content
+        }
+    };
 
     debug!("creating postprocessing builder");
     let settings = PostProcessingBuilder::default()
