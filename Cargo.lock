@@ -347,7 +347,7 @@ dependencies = [
  "pest_derive",
  "regex",
  "shell-words",
- "syntect",
+ "syntect 4.6.0",
  "typed-arena",
  "unicode_categories",
  "xdg",
@@ -1237,6 +1237,7 @@ dependencies = [
  "anyhow",
  "comrak",
  "lazy_static",
+ "syntect 5.0.0",
  "tokio",
  "tracing",
 ]
@@ -1891,6 +1892,29 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
+ "walkdir",
+ "yaml-rust",
+]
+
+[[package]]
+name = "syntect"
+version = "5.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c6c454c27d9d7d9a84c7803aaa3c50cd088d2906fe3c6e42da3209aa623576a8"
+dependencies = [
+ "bincode",
+ "bitflags",
+ "flate2",
+ "fnv",
+ "lazy_static",
+ "once_cell",
+ "onig",
+ "plist",
+ "regex-syntax",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "thiserror",
  "walkdir",
  "yaml-rust",
 ]

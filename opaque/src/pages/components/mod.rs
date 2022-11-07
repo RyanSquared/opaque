@@ -13,6 +13,7 @@ pub(crate) fn head(page_title: &str) -> Markup {
             meta charset="utf-8";
             meta name="viewport" content="width=device-width, initial-scale=1";
             link rel="stylesheet" href="/static/assets/main.css";
+            link rel="stylesheet" href="/static/assets/syntect.css";
             title {
                 (page_title)
             }

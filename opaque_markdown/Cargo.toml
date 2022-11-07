@@ -14,5 +14,6 @@ tracing = ["dep:tracing"]
 anyhow = { version = "1.0.66", features = ["backtrace"] }
 comrak = { version = "0.14.0", features = ["syntect"] }
 lazy_static = "1.4.0"
+syntect = "5.0.0"
 tokio = { version = "1.21.2", optional = true }
 tracing = {version="0.1.35", optional=true}
