@@ -5,6 +5,8 @@ use maud::{html, Markup};
 
 use crate::state::State;
 
+pub(crate) mod posts;
+
 pub(crate) fn head(page_title: &str) -> Markup {
     html! {
         head {

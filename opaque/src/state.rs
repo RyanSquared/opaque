@@ -1,3 +1,5 @@
+use std::{collections::HashMap, path::PathBuf};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -5,6 +7,27 @@ pub(crate) struct Author {
     pub(crate) name: String,
     pub(crate) email: String,
 }
+
+#[derive(Clone, Deserialize, Serialize)]
+pub(crate) struct FrontMatter {
+    #[serde(default)]
+    pub(crate) title: String,
+    pub(crate) author: Option<Author>,
+    pub(crate) date: Option<DateTime<Utc>>,
+}
+
+impl FrontMatter {
+    pub(crate) fn slug(&self) -> String {
+        self.title.as_str().to_lowercase().replace(' ', "-")
+    }
+}
+
+pub(crate) struct Page {
+    pub(crate) front_matter: FrontMatter,
+    pub(crate) file_path: PathBuf,
+}
+
+pub(crate) type PageMap = HashMap<String, Page>;
 
 // TODO: This should be serde-able, and deserialized from a config file, similar to how
 // Jekyll is configured. Information that goes here is typically information that will be
@@ -17,11 +40,11 @@ pub(crate) struct Config {
     pub(crate) author: Author,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
 pub(crate) struct State {
     pub(crate) config: Config,
     pub(crate) url: String,
     pub(crate) page_map: Vec<(String, String)>,
+    pub(crate) posts: PageMap,
 }
 
 impl State {
@@ -37,6 +60,13 @@ impl State {
             },
             url: "https://ryansquared.pub".to_string(),
             page_map: vec![],
+            posts: HashMap::new(),
         }
+    }
+
+    pub(crate) fn sorted_posts<'a>(&'a self) -> Vec<(&'a String, &'a Page)> {
+        let mut posts = self.posts.iter().collect::<Vec<(&String, &Page)>>();
+        posts.sort_by_key(|v| std::cmp::Reverse(v.1.front_matter.date));
+        posts
     }
 }

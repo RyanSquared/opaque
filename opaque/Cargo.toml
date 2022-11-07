@@ -44,3 +44,6 @@ parking_lot = "0.12.1"
 serde_yaml = "0.9.14"
 chrono = { version = "0.4.22", features = ["serde"] }
 serde = { version = "1.0.147", features = ["serde_derive"] }
+walkdir = "2.3.2"
+thiserror = "1.0.37"
+axum-macros = "0.2.3"
