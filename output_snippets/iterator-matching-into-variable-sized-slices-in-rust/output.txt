@@ -1,0 +1,6 @@
+[0m[0m[1m[32m     Created[0m binary (application) `umbrella` package
+00000000: 1b5b 306d 1b5b 306d 1b5b 316d 1b5b 3332  .[0m.[0m.[1m.[32
+00000010: 6d20 2020 2020 4372 6561 7465 641b 5b30  m     Created.[0
+00000020: 6d20 6269 6e61 7279 2028 6170 706c 6963  m binary (applic
+00000030: 6174 696f 6e29 2060 756d 6272 656c 6c61  ation) `umbrella
+00000040: 6020 7061 636b 6167 650a                 ` package.

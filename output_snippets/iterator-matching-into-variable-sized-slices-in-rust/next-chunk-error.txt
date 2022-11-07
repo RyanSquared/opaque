@@ -1,0 +1,11 @@
+[0m[0m[1m[32m    Checking[0m umbrella v0.1.0 (/home/ryan/builds/enigma/projects/umbrella)
+[0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature 'iter_next_chunk': recently added[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/main.rs:80:46[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m80[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                    if let Ok([_, n]) = iter.next_chunk() {[0m
+[0m   [0m[0m[1m[38;5;12m| [0m[0m                                             [0m[0m[1m[38;5;9m^^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #98326 <https://github.com/rust-lang/rust/issues/98326> for more information[0m
+
+[0m[1mFor more information about this error, try `rustc --explain E0658`.[0m
+[0m[0m[1m[31merror[0m[1m:[0m could not compile `umbrella` due to previous error

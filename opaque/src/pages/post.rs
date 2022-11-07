@@ -30,12 +30,12 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Result {
     })
 }
 
-#[tracing::instrument(skip(state))]
+#[tracing::instrument(skip(state, post_slug))]
 #[cfg_attr(debug_assertions, axum_macros::debug_handler)]
-pub(crate) async fn slug(Path(post): Path<String>, state: Extension<Arc<State>>) -> Result {
-    let post = match state.posts.get(&post) {
+pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<State>>) -> Result {
+    let post = match state.posts.get(&post_slug) {
         Some(post) => post,
-        None => return Err(Error::PostNotFound(post)),
+        None => return Err(Error::PostNotFound(post_slug)),
     };
 
     debug!(?post.front_matter.title, "found post for slug");
@@ -56,6 +56,7 @@ pub(crate) async fn slug(Path(post): Path<String>, state: Extension<Arc<State>>)
         .convert_ansi(
             "opaque-ansi-output".to_string(),
             "output_snippets/".to_string(),
+            post_slug,
         )
         .unwrap()
         .build();

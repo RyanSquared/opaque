@@ -11,10 +11,11 @@ static CACHE: OnceCell<Mutex<uluru::LRUCache<(String, String), 256>>> = OnceCell
 #[derive(Debug, Clone)]
 pub(crate) struct ConvertAnsi {
     source_directory: PathBuf,
+    subdirectory: PathBuf,
 }
 
 impl ConvertAnsi {
-    pub(crate) fn new(source_file_path: String) -> Result<Self> {
+    pub(crate) fn new(source_file_path: String, subdirectory: String) -> Result<Self> {
         if let None = CACHE.get() {
             CACHE
                 .set(Mutex::new(uluru::LRUCache::default()))
@@ -24,7 +25,7 @@ impl ConvertAnsi {
         source_directory
             .try_exists()
             .context(format!("{source_directory:?} does not exist"))?;
-        Ok(ConvertAnsi { source_directory })
+        Ok(ConvertAnsi { source_directory, subdirectory: PathBuf::from(subdirectory) })
     }
 }
 
@@ -36,10 +37,13 @@ impl super::PostProcessor for ConvertAnsi {
             let Some(filename) = el.get_attribute("source") else {
                 return Ok(());
             };
-            let path = self
-                .source_directory
-                .clone()
-                .join(filename.as_str().trim_matches('/'));
+
+            let mut path = self.source_directory.clone();
+            if el.get_attribute("relative").is_some() {
+                path = path.join(self.subdirectory.as_path())
+            }
+            path = path.join(filename.as_str().trim_matches('/'));
+
             debug!(?path, "loading ANSI output file");
 
             // Return auto generated output from the cache if available

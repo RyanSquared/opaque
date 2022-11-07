@@ -47,9 +47,10 @@ impl PostProcessingBuilder {
         mut self,
         selector: String,
         source_file_path: String,
+        subdirectory: String,
     ) -> Result<Self> {
         self.convert_ansi_selector
-            .push((selector, ConvertAnsi::new(source_file_path)?));
+            .push((selector, ConvertAnsi::new(source_file_path, subdirectory)?));
         Ok(self)
     }
 
