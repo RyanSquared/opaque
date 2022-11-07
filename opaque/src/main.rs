@@ -10,8 +10,8 @@ use tracing_subscriber::prelude::*;
 
 use axum::{routing::get, Extension, Router};
 
-mod post_scanner;
 mod pages;
+mod post_scanner;
 mod postprocessing;
 mod state;
 
@@ -34,12 +34,13 @@ async fn main() -> anyhow::Result<()> {
     // TODO: dynamic generation of either `app` or `page_map`?
     // I have not seen other projects do this so it may be fine to just leave it as-is. Besides,
     // this gives me the ability to add arbitrary URLs.
-    
+
     let mut state = {
         let mut state = state::State::new();
-        state
-            .page_map
-            .push(("About".to_string(), "/about".to_string()));
+        state.page_map.extend([
+            ("Posts".to_string(), "/posts".to_string()),
+            ("About".to_string(), "/about".to_string()),
+        ]);
         state
     };
 
