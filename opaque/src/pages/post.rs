@@ -17,7 +17,7 @@ use crate::state::State;
 static CACHE: OnceCell<Mutex<uluru::LRUCache<(String, String), 32>>> = OnceCell::new();
 
 #[tracing::instrument(skip(state))]
-#[cfg_attr(debug_assertions, axum_macros::debug_handler)]
+#[cfg_attr(debug_assertions, axum::debug_handler)]
 pub(crate) async fn index(state: Extension<Arc<State>>) -> Result {
     Ok(html! {
         (DOCTYPE)
@@ -37,7 +37,7 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Result {
 }
 
 #[tracing::instrument(skip(state, post_slug))]
-#[cfg_attr(debug_assertions, axum_macros::debug_handler)]
+#[cfg_attr(debug_assertions, axum::debug_handler)]
 pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<State>>) -> Result {
     let post = match state.posts.get(&post_slug) {
         Some(post) => post,

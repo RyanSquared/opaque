@@ -18,7 +18,7 @@ bundled_static = ["dep:include_dir", "dep:mime_guess"]
 maud = {version="0.24.0", features=["axum"]}
 
 # Website hosting
-axum = {version="0.5.17", features=["headers"]}
+axum = { version = "0.5.17", features = ["headers", "macros"] }
 tokio = { version = "1.21.2", features = ["full", "fs", "tracing"] }
 
 # Static file hosting - dev only? for now?
@@ -47,4 +47,3 @@ chrono = { version = "0.4.22", features = ["serde", "std"], default-features = f
 serde = { version = "1.0.147", features = ["serde_derive"] }
 walkdir = "2.3.2"
 thiserror = "1.0.37"
-axum-macros = "0.2.3"
