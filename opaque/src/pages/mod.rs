@@ -6,7 +6,7 @@ use axum::{
     response::{IntoResponse, Response},
     Extension,
 };
-use maud::{html, Markup};
+use maud::{html, Markup, DOCTYPE};
 
 use crate::state::State;
 
@@ -42,7 +42,21 @@ impl IntoResponse for Error {
     }
 }
 
-#[tracing::instrument(skip(_state))]
-pub(crate) async fn index(_state: Extension<Arc<State>>) -> Markup {
-    html! {}
+#[tracing::instrument(skip(state))]
+pub(crate) async fn index(state: Extension<Arc<State>>) -> Markup {
+    html! {
+        (DOCTYPE)
+        html {
+            (components::head("Index"))
+            body {
+                (components::header(&state))
+                main {
+                    .content {
+                        "hi!"
+                    }
+                }
+                (components::footer(&state))
+            }
+        }
+    }
 }

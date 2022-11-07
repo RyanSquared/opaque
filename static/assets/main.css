@@ -360,6 +360,8 @@ header {
 #site_nav > a {
 	font-size: 16px;
 	color: var(--color-text);
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 /* Main */

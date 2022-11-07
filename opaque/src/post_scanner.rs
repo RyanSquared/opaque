@@ -15,7 +15,7 @@ pub(crate) async fn walk_directory(
     path: impl AsRef<Path> + std::fmt::Debug,
     page_map: &mut PageMap,
 ) -> Result<()> {
-    'walkdir: for entry in WalkDir::new(path) {
+    'walkdir: for entry in WalkDir::new(path).follow_links(true) {
         let entry = entry?;
         if entry.metadata()?.is_file() {
             debug!(?entry, "loading file front matter");
