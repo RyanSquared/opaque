@@ -19,6 +19,7 @@ COPY --from=builder /out/opaque /usr/local/bin/opaque
 
 WORKDIR /usr/share/opaque
 COPY content /usr/share/opaque/content
+COPY enigma/_posts /usr/share/opaque/enigma/_posts
 COPY output_snippets /usr/share/opaque/output_snippets
 
 EXPOSE 8000
