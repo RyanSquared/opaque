@@ -17,10 +17,12 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+    - id: repo
+      run: echo "name=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_OUTPUT
     - uses: docker/build-push-action@v3
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}
-        cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:latest
+        tags: ${{ steps.repo.outputs.name }}
+        cache-from: type=registry,ref=${{ steps.repo.outputs.name }}:latest
         cache-to: type=inline
