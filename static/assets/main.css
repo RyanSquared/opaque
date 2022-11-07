@@ -308,16 +308,13 @@ body {
 	padding: 0px;
 }
 
-div.code {
-	border: 1px solid var(--color-text);
-	padding: 12px;
-}
-
-div.code > pre {
+pre {
 	overflow: auto;
 	/* for the scroll bar */
-	padding-bottom: 1em;
+	border: 1px solid var(--color-text);
+	padding: 12px;
 	margin: 4px;
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 img {

@@ -169,7 +169,7 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
     let mut state = GraphicsModeState::default();
     let mut output = vec![];
 
-    output.push("<div class=\"code\"><pre><code>".to_string());
+    output.push("<pre class=\"ansi_output\"><code>".to_string());
 
     #[cfg(feature = "tracing")]
     debug!("converting ANSI escape code and text chunks to HTML");
@@ -188,6 +188,6 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
         }
     }
 
-    output.push("</code></pre></div>".to_string());
+    output.push("</code></pre>".to_string());
     output.join("")
 }
