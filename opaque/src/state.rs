@@ -1,6 +1,6 @@
-use std::{collections::HashMap, path::PathBuf};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use std::{collections::HashMap, path::PathBuf};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub(crate) struct Author {
@@ -14,6 +14,7 @@ pub(crate) struct FrontMatter {
     pub(crate) title: String,
     pub(crate) author: Option<Author>,
     pub(crate) date: Option<DateTime<Utc>>,
+    pub(crate) published: Option<bool>,
 }
 
 impl FrontMatter {
@@ -64,8 +65,22 @@ impl State {
         }
     }
 
+    pub(crate) fn with_page_map(mut self, page_map: &[(String, String)]) -> Self {
+        self.page_map = Vec::from(page_map);
+        self
+    }
+
+    pub(crate) fn with_posts(mut self, posts: PageMap) -> Self {
+        self.posts = posts;
+        self
+    }
+
     pub(crate) fn sorted_posts<'a>(&'a self) -> Vec<(&'a String, &'a Page)> {
-        let mut posts = self.posts.iter().collect::<Vec<(&String, &Page)>>();
+        let mut posts = self
+            .posts
+            .iter()
+            .filter(|v| v.1.front_matter.published.unwrap_or(true))
+            .collect::<Vec<(&String, &Page)>>();
         posts.sort_by_key(|v| std::cmp::Reverse(v.1.front_matter.date));
         posts
     }

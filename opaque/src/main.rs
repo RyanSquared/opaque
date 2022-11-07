@@ -35,16 +35,10 @@ async fn main() -> anyhow::Result<()> {
     // I have not seen other projects do this so it may be fine to just leave it as-is. Besides,
     // this gives me the ability to add arbitrary URLs.
 
-    let mut state = {
-        let mut state = state::State::new();
-        state.page_map.extend([
-            ("Posts".to_string(), "/posts".to_string()),
-            ("About".to_string(), "/about".to_string()),
-        ]);
-        state
-    };
-
-    post_scanner::walk_directory("content", &mut state.posts).await?;
+    let state = state::State::new().with_page_map(&[
+        ("Posts".to_string(), "/posts".to_string()),
+        ("About".to_string(), "/about".to_string()),
+    ]).with_posts(post_scanner::walk_directory("content").await?);
 
     let app = Router::new()
         .route("/", get(pages::index))

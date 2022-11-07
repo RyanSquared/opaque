@@ -10,11 +10,9 @@ use walkdir::WalkDir;
 
 use crate::state::{FrontMatter, Page, PageMap};
 
-#[tracing::instrument(skip(page_map))]
-pub(crate) async fn walk_directory(
-    path: impl AsRef<Path> + std::fmt::Debug,
-    page_map: &mut PageMap,
-) -> Result<()> {
+#[tracing::instrument]
+pub(crate) async fn walk_directory(path: impl AsRef<Path> + std::fmt::Debug) -> Result<PageMap> {
+    let mut page_map = PageMap::new();
     'walkdir: for entry in WalkDir::new(path).follow_links(true) {
         let entry = entry?;
         if entry.metadata()?.is_file() {
@@ -33,16 +31,23 @@ pub(crate) async fn walk_directory(
                     let front_matter: FrontMatter =
                         serde_yaml::from_str(lines.join("\n").as_str())?;
                     let slug = front_matter.slug();
-                    debug!(?entry, ?slug, "storing parsed front_matter and file_path under slug");
-                    page_map.insert(slug, Page {
-                        front_matter,
-                        file_path: entry.path().to_path_buf(),
-                    });
+                    debug!(
+                        ?entry,
+                        ?slug,
+                        "storing parsed front_matter and file_path under slug"
+                    );
+                    page_map.insert(
+                        slug,
+                        Page {
+                            front_matter,
+                            file_path: entry.path().to_path_buf(),
+                        },
+                    );
                     continue 'walkdir;
                 }
                 lines.push(line);
             }
         }
     }
-    Ok(())
+    Ok(page_map)
 }
