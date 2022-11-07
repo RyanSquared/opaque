@@ -405,3 +405,11 @@ ul.no_list_style {
 	list-style: none;
 	padding-left: 0px;
 }
+
+div.post {
+	margin-bottom: 32px;
+}
+
+div.post > h2 {
+	margin-top: 8px;
+}
