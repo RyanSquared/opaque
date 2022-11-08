@@ -18,7 +18,6 @@ fn create_options() -> ComrakOptions {
     comrak_options.extension.tasklist = true;
     comrak_options.extension.header_ids = Some("md-header-".to_string());
     comrak_options.extension.description_lists = true;
-    // TODO: this should probably be parsed out and returned along with the renderd post
     comrak_options.extension.front_matter_delimiter = Some("---".to_string());
     comrak_options.render.unsafe_ = true;
     comrak_options.render.unsafe_ = true;
