@@ -23,6 +23,9 @@ jobs:
       run: echo "name=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_OUTPUT
     - uses: docker/build-push-action@v3
       with:
+        build-args: |
+          PROFILE=release
+          TARGET=release
         context: .
         push: true
         tags: ${{ steps.repo.outputs.name }}

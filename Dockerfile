@@ -1,7 +1,7 @@
 FROM rust:1.65 AS builder
 
 # Note: When in release mode, both of these should be `release`. When in dev
-# mode, these should both be `debug`.
+# mode, PROFILE is dev, TARGET is debug
 ARG PROFILE=dev
 ARG TARGET=debug
 ADD . /build
@@ -12,13 +12,17 @@ RUN \
     --mount=type=cache,target=/usr/local/cargo/registry \
     cargo build --profile $PROFILE && \
     mkdir -p /out && \
-    find /build/target -type f -executable -name opaque -exec cp {} /out \;
+    find /build/target/$TARGET -type f -executable -name opaque -exec cp {} /out \;
 
 FROM debian:bullseye
 COPY --from=builder /out/opaque /usr/local/bin/opaque
 
 WORKDIR /usr/share/opaque
+
+# Load static content from Enigma and Opaque
 COPY content /usr/share/opaque/content
+COPY static /usr/share/opaque/static
+COPY enigma/assets/images /usr/share/opaque/static/assets/images
 COPY enigma/_posts /usr/share/opaque/enigma/_posts
 COPY output_snippets /usr/share/opaque/output_snippets
 
