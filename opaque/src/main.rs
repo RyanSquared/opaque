@@ -38,7 +38,7 @@ async fn main() -> anyhow::Result<()> {
     let state = state::State::new().with_page_map(&[
         ("Posts".to_string(), "/posts".to_string()),
         ("About".to_string(), "/about".to_string()),
-    ]).with_posts(post_scanner::walk_directory("content").await?);
+    ]).with_posts(post_scanner::walk_directory("content/posts").await?);
 
     let app = Router::new()
         .route("/", get(pages::index))

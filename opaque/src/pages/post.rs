@@ -52,13 +52,16 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
         .as_ref()
         .unwrap_or(&state.config.author);
 
-    let mut cache = CACHE.get_or_init(|| Mutex::new(uluru::LRUCache::default())).lock().await;
+    let mut cache = CACHE
+        .get_or_init(|| Mutex::new(uluru::LRUCache::default()))
+        .lock()
+        .await;
 
     let content = match cache.find(|(k, _)| post_slug == *k) {
         Some((_, hit)) => {
             debug!(?post_slug, "markdown: cache hit");
             hit.clone()
-        },
+        }
         None => {
             let content = render_path_to_html(post.file_path.as_path()).await?;
             cache.insert((post_slug.clone(), content.clone()));
@@ -66,9 +69,23 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
         }
     };
 
+    // NOTE: display() is lossy, need to figure out a way to ensure paths are UTF8.
     debug!("creating postprocessing builder");
     let settings = PostProcessingBuilder::default()
-        .rewrite_links("img[src]".to_string(), "/static/".into(), None)
+        .rewrite_links(
+            "img[src]".to_string(),
+            format!(
+                "{}/{}",
+                state.config.url.trim_matches('/'),
+                state
+                    .config
+                    .static_path
+                    .display()
+                    .to_string()
+                    .trim_start_matches('/')
+            ),
+            None,
+        )
         .expect("selector wasn't properly parsed")
         .convert_ansi(
             "opaque-ansi-output".to_string(),

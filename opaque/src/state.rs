@@ -39,11 +39,13 @@ pub(crate) struct Config {
     pub(crate) name: String,
     pub(crate) description: String,
     pub(crate) author: Author,
+    pub(crate) url: String,
+    pub(crate) static_path: PathBuf,
+    pub(crate) content_path: PathBuf,
 }
 
 pub(crate) struct State {
     pub(crate) config: Config,
-    pub(crate) url: String,
     pub(crate) page_map: Vec<(String, String)>,
     pub(crate) posts: PageMap,
 }
@@ -58,8 +60,10 @@ impl State {
                     name: "RyanSquared".to_string(),
                     email: "me@ryansquared.pub".to_string(),
                 },
+                static_path: "static/".into(),
+                content_path: "content/".into(),
+                url: "https://ryansquared.pub/".to_string(),
             },
-            url: "https://ryansquared.pub".to_string(),
             page_map: vec![],
             posts: HashMap::new(),
         }

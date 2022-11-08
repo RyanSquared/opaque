@@ -20,8 +20,9 @@ COPY --from=builder /out/opaque /usr/local/bin/opaque
 WORKDIR /usr/share/opaque
 
 # Load static content from Enigma and Opaque
-COPY content /usr/share/opaque/content
 COPY static /usr/share/opaque/static
+COPY enigma/_posts /usr/share/opaque/content/posts
+COPY enigma/*.md /usr/share/opaque/content
 COPY enigma/assets/images /usr/share/opaque/static/assets/images
 COPY enigma/_posts /usr/share/opaque/enigma/_posts
 COPY output_snippets /usr/share/opaque/output_snippets
