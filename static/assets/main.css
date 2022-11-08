@@ -411,9 +411,9 @@ ul.no_list_style {
 }
 
 div.post {
-	margin-bottom: 32px;
+	margin-bottom: 16px;
 }
 
-div.post > h2 {
-	margin-top: 8px;
+div.post > h3 {
+	margin-top: 4px;
 }

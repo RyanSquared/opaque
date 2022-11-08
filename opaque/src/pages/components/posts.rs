@@ -9,7 +9,7 @@ pub(crate) fn post_list(state: &Extension<Arc<State>>, post_limit: Option<usize>
     let post_limit = post_limit.unwrap_or(usize::MAX);
     let posts = state.sorted_posts();
     html! {
-        h1 { (header.unwrap_or("Posts")) }
+        h2 { (header.unwrap_or("Posts")) }
         @for post in posts.iter().take(post_limit) {
             div.post {
                 small {
@@ -28,7 +28,7 @@ pub(crate) fn post_list(state: &Extension<Arc<State>>, post_limit: Option<usize>
                          .name)
                     }
                 }
-                h2 { a href=(format!("/posts/{}", post.0)) { (post.1.front_matter.title) } }
+                h3 { a href=(format!("/posts/{}", post.0)) { (post.1.front_matter.title) } }
             }
         }
     }
