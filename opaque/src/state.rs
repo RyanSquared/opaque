@@ -1,6 +1,6 @@
 use std::{collections::HashMap, path::PathBuf};
 
-use anyhow::Result;
+use color_eyre::eyre::{Result, Report};
 use clap::Parser;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -86,7 +86,7 @@ impl State {
         }
     }
 
-    pub(crate) async fn new_with_config_from_cli() -> Result<Self> {
+    pub(crate) async fn new_with_config_from_cli() -> Result<Self, Report> {
         let config_file = PartialConfig::parse().config_file;
         let mut config_object: PartialConfig = if config_file.exists() {
             let config_text = read_to_string(config_file).await?;

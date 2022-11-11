@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use color_eyre::eyre::Result;
 use once_cell::sync::OnceCell;
 use parking_lot::Mutex;
 use std::path::PathBuf;
@@ -22,9 +22,7 @@ impl ConvertAnsi {
                 .expect("unset cache can't be initialized");
         }
         let source_directory = PathBuf::from(source_file_path);
-        source_directory
-            .try_exists()
-            .context(format!("{source_directory:?} does not exist"))?;
+        source_directory.try_exists()?;
         Ok(ConvertAnsi { source_directory, subdirectory: PathBuf::from(subdirectory) })
     }
 }

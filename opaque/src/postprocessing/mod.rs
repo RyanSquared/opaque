@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use color_eyre::eyre::{eyre, Result};
 use lol_html::{element, RewriteStrSettings};
 
 mod rewrite_links;
@@ -37,7 +37,7 @@ impl PostProcessingBuilder {
                     .nth(1)
                     .map(|v| String::from(v.trim_end_matches(']')))
             })
-            .context("An attribute could not be derived from selector")?;
+            .ok_or(eyre!("rewrite_links: an attribute could not be derived from selector"))?;
         let rewrite_links = RewriteLinks::new(url, attribute);
         self.rewrite_links_selector.push((selector, rewrite_links));
         Ok(self)

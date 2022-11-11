@@ -34,17 +34,22 @@ tracing-subscriber = {version = "0.3.11", features = ["env-filter", "fmt", "ansi
 lol_html = "0.3.1"
 
 # Error handling
-anyhow = { version = "1.0.66", features = ["backtrace"] }
+color-eyre = "0.6.2"
+thiserror = "1.0.37"
+
+# Configuration
+clap = { version = "4.0.22", features = ["derive", "error-context", "help", "suggestions", "std", "usage"], default-features = false }
+serde = { version = "1.0.147", features = ["serde_derive"] }
+serde_yaml = "0.9.14"
+
+# Utilities
+chrono = { version = "0.4.22", features = ["serde", "std"], default-features = false }
+once_cell = "1.16.0"
+parking_lot = "0.12.1"
+uluru = "3.0.0"
+walkdir = "2.3.2"
 
 # Workspace
 opaque_markdown = { version = "0.1.0", path = "../opaque_markdown" }
 opaque_ansi = { version = "0.1.0", path = "../opaque_ansi" }
-once_cell = "1.16.0"
-uluru = "3.0.0"
-parking_lot = "0.12.1"
-serde_yaml = "0.9.14"
-chrono = { version = "0.4.22", features = ["serde", "std"], default-features = false }
-serde = { version = "1.0.147", features = ["serde_derive"] }
-walkdir = "2.3.2"
-thiserror = "1.0.37"
-clap = { version = "4.0.22", features = ["derive", "error-context", "help", "suggestions", "std", "usage"], default-features = false }
+tracing-error = "0.2.0"

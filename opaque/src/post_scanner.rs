@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use anyhow::Result;
+use color_eyre::eyre::Result;
 use tokio::{
     fs::File,
     io::{AsyncBufReadExt, BufReader},

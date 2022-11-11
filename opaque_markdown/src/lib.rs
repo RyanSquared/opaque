@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use eyre::{Result, WrapErr};
 use comrak::{
     format_html_with_plugins, nodes::AstNode, parse_document, Arena, ComrakOptions, ComrakPlugins,
 };
@@ -55,7 +55,7 @@ pub fn render_to_html(input: &str) -> Result<String> {
     let mut html = vec![];
     format_html_with_plugins(root, &COMRAK_OPTIONS, &mut html, &comrak_plugins)?;
 
-    String::from_utf8(html).context("unable to decode html from utf8")
+    String::from_utf8(html).wrap_err("unable to decode html from utf8")
 }
 
 #[cfg_attr(feature = "tracing", tracing::instrument)]

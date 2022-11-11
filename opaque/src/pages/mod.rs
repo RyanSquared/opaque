@@ -28,8 +28,8 @@ pub(crate) enum Error {
 
 pub(crate) type Result<T = Markup> = std::result::Result<T, Error>;
 
-impl From<anyhow::Error> for Error {
-    fn from(error: anyhow::Error) -> Self {
+impl From<color_eyre::eyre::Error> for Error {
+    fn from(error: color_eyre::eyre::Error) -> Self {
         Self::InternalServerError(error.to_string())
     }
 }

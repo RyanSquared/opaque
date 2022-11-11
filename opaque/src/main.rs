@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use color_eyre::eyre::{Report, WrapErr};
 use tower_http::catch_panic::CatchPanicLayer;
 use tower_http::trace::TraceLayer;
 use tracing::info;
@@ -23,21 +24,29 @@ fn setup_registry() {
     tracing_subscriber::registry()
         .with(envfilter)
         .with(tracing_subscriber::fmt::layer().with_span_events(FmtSpan::CLOSE))
+        .with(tracing_error::ErrorLayer::default())
         .init();
 }
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() -> Result<(), Report> {
     setup_registry();
+
+    color_eyre::install()?;
 
     // TODO: dynamic generation of either `app` or `page_map`?
     // I have not seen other projects do this so it may be fine to just leave it as-is. Besides,
     // this gives me the ability to add arbitrary URLs.
 
     let state = state::State::new_with_config_from_cli()
-        .await?
+        .await
+        .wrap_err("Unable to determine config from CLI or config file")?
         .with_page_map(&[("Posts".to_string(), "/posts".to_string())])
-        .with_posts(post_scanner::walk_directory("content/posts").await?);
+        .with_posts(
+            post_scanner::walk_directory("content/posts")
+                .await
+                .wrap_err("Unable to load posts from posts directory")?,
+        );
 
     info!(?state.config, "Running with given configuration");
 
