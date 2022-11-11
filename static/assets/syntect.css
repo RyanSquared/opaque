@@ -1,5 +1,8 @@
+/* Modified version of the Apprentice colorscheme to support light mode */
+/* Actual Apprentice colors are below in a @media block */
+
 .syntect-comment, .syntect-meta.syntect-documentation {
- color: var(--terminal-color-45);
+ color: var(--terminal-color-27);
 }
 /*
  * Note: this is done because this matches against the outside quotes ONLY
@@ -9,31 +12,31 @@
 }
 */
 .syntect-string.syntect-regexp {
- color: var(--terminal-color-108);
+ color: var(--terminal-color-28);
 }
 .syntect-constant.syntect-character.syntect-escape {
- color: var(--terminal-color-208);
+ color: var(--terminal-color-94);
 }
 .syntect-constant.syntect-numeric {
- color: var(--terminal-color-208);
+ color: var(--terminal-color-94);
 }
 .syntect-variable {
  color: var(--color-text);
 }
 .syntect-variable.syntect-function {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 .syntect-variable.syntect-language {
  color: var(--color-text);
 }
 .syntect-keyword {
- color: var(--terminal-color-110);
+ color: var(--terminal-color-21);
 }
 .syntect-meta.syntect-import .syntect-keyword, .syntect-keyword.syntect-control.syntect-import, .syntect-keyword.syntect-control.syntect-import.syntect-from, .syntect-keyword.syntect-other.syntect-import, .syntect-keyword.syntect-control.syntect-at-rule.syntect-include, .syntect-keyword.syntect-control.syntect-at-rule.syntect-import {
- color: var(--terminal-color-110);
+ color: var(--terminal-color-21);
 }
 .syntect-keyword.syntect-operator.syntect-comparison, .syntect-keyword.syntect-operator.syntect-assignment, .syntect-keyword.syntect-operator.syntect-arithmetic {
- color: var(--terminal-color-110);
+ color: var(--terminal-color-21);
 }
 
 .syntect-storage {
@@ -42,7 +45,7 @@
 
 /* mut static const, considered keywords */
 .syntect-storage.syntect-modifier {
- color: var(--terminal-color-103);
+ color: var(--terminal-color-55);
 }
 
 /* an ordinary typedef, no color */
@@ -53,13 +56,13 @@
  color: var(--color-text);
 }
 .syntect-entity.syntect-other.syntect-attribute-name {
- color: var(--terminal-color-103);
+ color: var(--terminal-color-55);
 }
 .syntect-support, .syntect-support.syntect-type, .syntect-support.syntect-class {
- color: var(--terminal-color-68);
+ color: var(--terminal-color-19);
 }
 .syntect-entity.syntect-name.syntect-function {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 .syntect-punctuation.syntect-definition.syntect-variable {
  color: var(--color-text);
@@ -73,7 +76,7 @@
  color: var(--color-text);
 }
 .syntect-support.syntect-function.syntect-construct, .syntect-keyword.syntect-other.syntect-new {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 /*
 .syntect-constant.syntect-character, .syntect-constant.syntect-other {
@@ -84,17 +87,17 @@
  color: var(--color-text);
 }
 .syntect-punctuation.syntect-definition.syntect-tag.syntect-html, .syntect-punctuation.syntect-definition.syntect-tag.syntect-begin, .syntect-punctuation.syntect-definition.syntect-tag.syntect-end {
- color: var(--terminal-color-110);
+ color: var(--terminal-color-21);
 }
 .syntect-support.syntect-function {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 .syntect-punctuation.syntect-separator.syntect-continuation {
  color: var(--color-text);
 }
 /* keyword */
 .syntect-storage.syntect-type {
- color: var(--terminal-color-110);
+ color: var(--terminal-color-21);
 }
 /* raise ? */
 .syntect-support.syntect-type.syntect-exception {
@@ -102,18 +105,18 @@
 }
 /* special method? normal method. */
 .syntect-keyword.syntect-other.syntect-special-method {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 /* hm. lmao. */
 .syntect-invalid {
  background-color: var(--color-red);
 }
 .syntect-string.syntect-quoted.syntect-double {
- color: var(--terminal-color-108);
+ color: var(--terminal-color-28);
 }
 /* in rust, this is usually a char */
 .syntect-string.syntect-quoted.syntect-single {
- color: var(--terminal-color-208)
+ color: var(--terminal-color-94)
 }
 /* so this actually matches the ends of strings as well, rather than just
  * the content. unsure of what to do here. */
@@ -133,7 +136,7 @@
 }
 /* cssClassName links to Function, weirdly? */
 .syntect-meta.syntect-selector.syntect-css {
- color: var(--terminal-color-229);
+ color: var(--terminal-color-17);
 }
 
 /* TODO: everything after here */
@@ -337,3 +340,346 @@
  color: var(--color-text);
 }
 
+
+@media (prefers-color-scheme: dark) {
+	/* This uses the Apprentice colorscheme */
+
+	.syntect-comment, .syntect-meta.syntect-documentation {
+	 color: var(--terminal-color-45);
+	}
+	/*
+	 * Note: this is done because this matches against the outside quotes ONLY
+	 * of a single-quote string, which is different to a double quote string
+	.syntect-string {
+	 color: var(--terminal-color-108);
+	}
+	*/
+	.syntect-string.syntect-regexp {
+	 color: var(--terminal-color-108);
+	}
+	.syntect-constant.syntect-character.syntect-escape {
+	 color: var(--terminal-color-208);
+	}
+	.syntect-constant.syntect-numeric {
+	 color: var(--terminal-color-208);
+	}
+	.syntect-variable {
+	 color: var(--color-text);
+	}
+	.syntect-variable.syntect-function {
+	 color: var(--terminal-color-229);
+	}
+	.syntect-variable.syntect-language {
+	 color: var(--color-text);
+	}
+	.syntect-keyword {
+	 color: var(--terminal-color-110);
+	}
+	.syntect-meta.syntect-import .syntect-keyword, .syntect-keyword.syntect-control.syntect-import, .syntect-keyword.syntect-control.syntect-import.syntect-from, .syntect-keyword.syntect-other.syntect-import, .syntect-keyword.syntect-control.syntect-at-rule.syntect-include, .syntect-keyword.syntect-control.syntect-at-rule.syntect-import {
+	 color: var(--terminal-color-110);
+	}
+	.syntect-keyword.syntect-operator.syntect-comparison, .syntect-keyword.syntect-operator.syntect-assignment, .syntect-keyword.syntect-operator.syntect-arithmetic {
+	 color: var(--terminal-color-110);
+	}
+
+	.syntect-storage {
+	 color: var(--color-text);
+	}
+
+	/* mut static const, considered keywords */
+	.syntect-storage.syntect-modifier {
+	 color: var(--terminal-color-103);
+	}
+
+	/* an ordinary typedef, no color */
+	.syntect-keyword.syntect-control.syntect-class, .syntect-entity.syntect-name, .syntect-entity.syntect-name.syntect-class, .syntect-entity.syntect-name.syntect-type.syntect-class {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-other.syntect-inherited-class {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-other.syntect-attribute-name {
+	 color: var(--terminal-color-103);
+	}
+	.syntect-support, .syntect-support.syntect-type, .syntect-support.syntect-class {
+	 color: var(--terminal-color-68);
+	}
+	.syntect-entity.syntect-name.syntect-function {
+	 color: var(--terminal-color-229);
+	}
+	.syntect-punctuation.syntect-definition.syntect-variable {
+	 color: var(--color-text);
+	}
+	/*
+	.syntect-constant, .syntect-constant.syntect-language, .syntect-meta.syntect-preprocessor {
+	 color: var(--color-text);
+	}
+	*/
+	.syntect-entity.syntect-name.syntect-section {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-function.syntect-construct, .syntect-keyword.syntect-other.syntect-new {
+	 color: var(--terminal-color-229);
+	}
+	/*
+	.syntect-constant.syntect-character, .syntect-constant.syntect-other {
+	 color: var(--color-text);
+	}
+	*/
+	.syntect-entity.syntect-name.syntect-tag {
+	 color: var(--color-text);
+	}
+	.syntect-punctuation.syntect-definition.syntect-tag.syntect-html, .syntect-punctuation.syntect-definition.syntect-tag.syntect-begin, .syntect-punctuation.syntect-definition.syntect-tag.syntect-end {
+	 color: var(--terminal-color-110);
+	}
+	.syntect-support.syntect-function {
+	 color: var(--terminal-color-229);
+	}
+	.syntect-punctuation.syntect-separator.syntect-continuation {
+	 color: var(--color-text);
+	}
+	/* keyword */
+	.syntect-storage.syntect-type {
+	 color: var(--terminal-color-110);
+	}
+	/* raise ? */
+	.syntect-support.syntect-type.syntect-exception {
+	 color: var(--color-text);
+	}
+	/* special method? normal method. */
+	.syntect-keyword.syntect-other.syntect-special-method {
+	 color: var(--terminal-color-229);
+	}
+	/* hm. lmao. */
+	.syntect-invalid {
+	 background-color: var(--color-red);
+	}
+	.syntect-string.syntect-quoted.syntect-double {
+	 color: var(--terminal-color-108);
+	}
+	/* in rust, this is usually a char */
+	.syntect-string.syntect-quoted.syntect-single {
+	 color: var(--terminal-color-208)
+	}
+	/* so this actually matches the ends of strings as well, rather than just
+	 * the content. unsure of what to do here. */
+	/*
+	.syntect-punctuation.syntect-definition.syntect-string {
+	 color: var(--terminal-color-108);
+	}
+	*/
+	.syntect-meta.syntect-brace.syntect-square, .syntect-punctuation.syntect-section.syntect-brackets {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-brace.syntect-round, .syntect-meta.syntect-brace.syntect-curly, .syntect-punctuation.syntect-section, .syntect-punctuation.syntect-section.syntect-block, .syntect-punctuation.syntect-definition.syntect-parameters, .syntect-punctuation.syntect-section.syntect-group {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-constant.syntect-color, .syntect-invalid.syntect-deprecated.syntect-color.syntect-w3c-non-standard-color-name.syntect-scss {
+	 color: var(--color-text);
+	}
+	/* cssClassName links to Function, weirdly? */
+	.syntect-meta.syntect-selector.syntect-css {
+	 color: var(--terminal-color-229);
+	}
+
+	/* TODO: everything after here */
+	.syntect-entity.syntect-name.syntect-tag.syntect-css, .syntect-entity.syntect-name.syntect-tag.syntect-scss, .syntect-source.syntect-less .syntect-keyword.syntect-control.syntect-html.syntect-elements, .syntect-source.syntect-sass .syntect-keyword.syntect-control.syntect-untitled {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-other.syntect-attribute-name.syntect-class {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-other.syntect-attribute-name.syntect-id {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-other.syntect-attribute-name.syntect-pseudo-element, .syntect-entity.syntect-other.syntect-attribute-name.syntect-tag.syntect-pseudo-element, .syntect-entity.syntect-other.syntect-attribute-name.syntect-pseudo-class, .syntect-entity.syntect-other.syntect-attribute-name.syntect-tag.syntect-pseudo-class {
+	 color: var(--color-text);
+	}
+	.syntect-text.syntect-html.syntect-basic .syntect-meta.syntect-tag.syntect-other.syntect-html, .syntect-text.syntect-html.syntect-basic .syntect-meta.syntect-tag.syntect-any.syntect-html, .syntect-text.syntect-html.syntect-basic .syntect-meta.syntect-tag.syntect-block.syntect-any, .syntect-text.syntect-html.syntect-basic .syntect-meta.syntect-tag.syntect-inline.syntect-any, .syntect-text.syntect-html.syntect-basic .syntect-meta.syntect-tag.syntect-structure.syntect-any.syntect-html, .syntect-text.syntect-html.syntect-basic .syntect-source.syntect-js.syntect-embedded.syntect-html, .syntect-punctuation.syntect-separator.syntect-key-value.syntect-html {
+	 color: var(--color-text);
+	}
+	.syntect-text.syntect-html.syntect-basic .syntect-entity.syntect-other.syntect-attribute-name.syntect-html, .syntect-meta.syntect-tag.syntect-xml .syntect-entity.syntect-other.syntect-attribute-name {
+	 color: var(--color-text);
+	}
+	.syntect-keyword.syntect-other.syntect-special-method.syntect-ruby {
+	 color: var(--color-text);
+	}
+	.syntect-variable.syntect-other.syntect-constant.syntect-ruby {
+	 color: var(--color-text);
+	}
+	.syntect-constant.syntect-other.syntect-symbol.syntect-ruby {
+	 color: var(--color-text);
+	}
+	.syntect-keyword.syntect-other.syntect-special-method.syntect-ruby {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-array .syntect-support.syntect-function.syntect-construct.syntect-php {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-name.syntect-function.syntect-preprocessor.syntect-c, .syntect-meta.syntect-preprocessor.syntect-c.syntect-include, .syntect-meta.syntect-preprocessor.syntect-macro.syntect-c {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-preprocessor.syntect-c.syntect-include .syntect-string.syntect-quoted.syntect-other.syntect-lt-gt.syntect-include.syntect-c, .syntect-meta.syntect-preprocessor.syntect-c.syntect-include .syntect-punctuation.syntect-definition.syntect-string.syntect-begin.syntect-c, .syntect-meta.syntect-preprocessor.syntect-c.syntect-include .syntect-punctuation.syntect-definition.syntect-string.syntect-end.syntect-c {
+	 color: var(--color-text);
+	}
+	.syntect-other.syntect-package.syntect-exclude, .syntect-other.syntect-remove {
+	 color: var(--color-text);
+	}
+	.syntect-other.syntect-add {
+	 color: var(--color-text);
+	}
+	.syntect-punctuation.syntect-section.syntect-group.syntect-tex, .syntect-punctuation.syntect-definition.syntect-arguments.syntect-begin.syntect-latex, .syntect-punctuation.syntect-definition.syntect-arguments.syntect-end.syntect-latex, .syntect-punctuation.syntect-definition.syntect-arguments.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-group.syntect-braces.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-string.syntect-other.syntect-math.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-variable.syntect-parameter.syntect-function.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-punctuation.syntect-definition.syntect-constant.syntect-math.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-text.syntect-tex.syntect-latex .syntect-constant.syntect-other.syntect-math.syntect-tex, .syntect-constant.syntect-other.syntect-general.syntect-math.syntect-tex, .syntect-constant.syntect-other.syntect-general.syntect-math.syntect-tex, .syntect-constant.syntect-character.syntect-math.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-string.syntect-other.syntect-math.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-punctuation.syntect-definition.syntect-string.syntect-begin.syntect-tex, .syntect-punctuation.syntect-definition.syntect-string.syntect-end.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-keyword.syntect-control.syntect-label.syntect-latex, .syntect-text.syntect-tex.syntect-latex .syntect-constant.syntect-other.syntect-general.syntect-math.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-variable.syntect-parameter.syntect-definition.syntect-label.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-function.syntect-be.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-function.syntect-section.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-function.syntect-general.syntect-tex {
+	 color: var(--color-text);
+	}
+	.syntect-keyword.syntect-control.syntect-ref.syntect-latex {
+	 color: var(--color-text);
+	}
+	.syntect-storage.syntect-type.syntect-class.syntect-python, .syntect-storage.syntect-type.syntect-function.syntect-python, .syntect-storage.syntect-modifier.syntect-global.syntect-python {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-type.syntect-exception.syntect-python {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-scope.syntect-for-in-loop.syntect-shell, .syntect-variable.syntect-other.syntect-loop.syntect-shell {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-scope.syntect-case-block.syntect-shell, .syntect-meta.syntect-scope.syntect-case-body.syntect-shell {
+	 color: var(--color-text);
+	}
+	.syntect-punctuation.syntect-definition.syntect-logical-expression.syntect-shell {
+	 color: var(--color-text);
+	}
+	.syntect-storage.syntect-modifier.syntect-c++ {
+	 color: var(--color-text);
+	}
+	.syntect-support.syntect-function.syntect-perl {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-diff, .syntect-meta.syntect-diff.syntect-header {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-diff.syntect-range {
+	 color: var(--terminal-color-103);
+	}
+	.syntect-markup.syntect-deleted {
+	 color: var(--terminal-color-131);
+	}
+	.syntect-markup.syntect-changed {
+	 color: var(--terminal-color-103);
+	}
+	.syntect-markup.syntect-inserted {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-heading, .syntect-punctuation.syntect-definition.syntect-heading.syntect-markdown {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-quote {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-italic {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-bold {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-underline.syntect-link.syntect-markdown, .syntect-meta.syntect-link.syntect-reference .syntect-constant.syntect-other.syntect-reference.syntect-link.syntect-markdown {
+	 color: var(--color-text);
+	}
+	.syntect-constant.syntect-other.syntect-reference.syntect-link.syntect-markdown {
+	 color: var(--color-text);
+	}
+	.syntect-meta.syntect-paragraph.syntect-markdown .syntect-meta.syntect-dummy.syntect-line-break {
+	 color: var(--color-text);
+	}
+	.syntect-sublimelinter.syntect-notes {
+	 color: var(--color-text);
+	 background-color: #586e75;
+	}
+	.syntect-sublimelinter.syntect-outline.syntect-illegal {
+	 color: var(--color-text);
+	 background-color: #586e75;
+	}
+	.syntect-sublimelinter.syntect-underline.syntect-illegal {
+	 background-color: #dc322f;
+	}
+	.syntect-sublimelinter.syntect-outline.syntect-warning {
+	 color: var(--color-text);
+	 background-color: #839496;
+	}
+	.syntect-sublimelinter.syntect-underline.syntect-warning {
+	 color: var(--color-text);
+	}
+	.syntect-sublimelinter.syntect-outline.syntect-violation {
+	 color: var(--color-text);
+	 background-color: #657b83;
+	}
+	.syntect-sublimelinter.syntect-underline.syntect-violation {
+	 color: var(--color-text);
+	}
+	.syntect-sublimelinter.syntect-mark.syntect-warning {
+	 color: var(--color-text);
+	}
+	.syntect-sublimelinter.syntect-mark.syntect-error {
+	 color: var(--color-text);
+	}
+	.syntect-sublimelinter.syntect-gutter-mark {
+	 color: var(--color-text);
+	}
+	.syntect-brackethighlighter.syntect-all {
+	 color: var(--color-text);
+	}
+	.syntect-entity.syntect-name.syntect-filename.syntect-find-in-files {
+	 color: var(--color-text);
+	}
+	.syntect-constant.syntect-numeric.syntect-line-number.syntect-find-in-files {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-deleted.syntect-git_gutter {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-inserted.syntect-git_gutter {
+	 color: var(--color-text);
+	}
+	.syntect-markup.syntect-changed.syntect-git_gutter {
+	 color: var(--color-text);
+	}
+	.syntect-variable.syntect-other.syntect-readwrite.syntect-js, .syntect-variable.syntect-other.syntect-object.syntect-js, .syntect-variable.syntect-other.syntect-constant.syntect-js {
+	 color: var(--color-text);
+	}
+}

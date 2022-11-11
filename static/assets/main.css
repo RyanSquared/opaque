@@ -2,24 +2,27 @@
 	/* let's define some funky terminal colors */
 	/* this is based off: https://github.com/romainl/Apprentice#working-with-816-colors */
 
-	--color-black: #1C1C1C;
-	--color-red: #AF5F5F;
-	--color-green: #5F875F;
-	--color-yellow: #87875F;
-	--color-blue: #5F87AF;
-	--color-purple: #5F5F87;
-	--color-cyan: #5F8787;
+	/* multiply the above by 0.8 to darken*/
+	--color-black: #161616;
+	--color-red: #8C4C4C;
+	--color-green: #4C6C4C;
+	--color-yellow: #6C6C4C;
+	--color-blue: #4C6C8C;
+	--color-purple: #4C4C6C;
+	--color-cyan: #4C6C6C;
 	/* Probably, never use gray. Too low contrast */
 	--color-gray: #6C6C6C;
-	--color-background: #BCBCBC;
+	--color-background: #CBCBCB;
+	--color-black: #1C1C1C;
 
-	--color-bright-black: #444444;
-	--color-bright-red: #FF8700;
-	--color-bright-green: #87AF87;
-	--color-bright-yellow: #FFFFAF;
-	--color-bright-blue: #87AFD7;
+	--color-bright-black: #363636;
+	--color-bright-red: #CC6C00;
+	--color-bright-green: #6C8C6C;
+	--color-bright-yellow: #CCCC8C;
+	--color-bright-blue: #6C8CAC;
 	--color-bright-purple: #8787AF;
-	--color-bright-cyan: #5FAFAF;
+	--color-bright-purple: #6C6C8C;
+	--color-bright-cyan: #5C8C8C;
 	/* Don't think too hard. Terminal colors are weird. */
 	--color-bright-gray: #FFFFFF;
 	--color-text: #262626;
@@ -290,8 +293,44 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--color-text: #BCBCBC;
+		/* original Apprentice colors */
+		--color-red: #AF5F5F;
+		--color-green: #5F875F;
+		--color-yellow: #87875F;
+		--color-blue: #5F87AF;
+		--color-purple: #5F5F87;
+		--color-cyan: #5F8787;
+		--color-gray: #6C6C6C;
 		--color-background: #262626;
+
+		--color-bright-black: #444444;
+		--color-bright-red: #FF8700;
+		--color-bright-green: #87AF87;
+		--color-bright-yellow: #FFFFAF;
+		--color-bright-blue: #87AFD7;
+		--color-bright-purple: #8787AF;
+		--color-bright-cyan: #5FAFAF;
+		/* Don't think too hard. Terminal colors are weird. */
+		--color-bright-gray: #FFFFFF;
+		--color-text: #BCBCBC;
+
+		--terminal-color-0: var(--color-black);
+		--terminal-color-1: var(--color-red);
+		--terminal-color-2: var(--color-green);
+		--terminal-color-3: var(--color-yellow);
+		--terminal-color-4: var(--color-blue);
+		--terminal-color-5: var(--color-purple);
+		--terminal-color-6: var(--color-cyan);
+		--terminal-color-7: var(--color-gray);
+		--terminal-color-8: var(--color-bright-black);
+		--terminal-color-9: var(--color-bright-red);
+		--terminal-color-10: var(--color-bright-green);
+		--terminal-color-11: var(--color-bright-yellow);
+		--terminal-color-12: var(--color-bright-blue);
+		--terminal-color-13: var(--color-bright-purple);
+		--terminal-color-14: var(--color-bright-cyan);
+		--terminal-color-15: var(--color-bright-gray);
+
 		color: var(--color-text);
 		background-color: var(--color-background);
 	}
@@ -314,7 +353,7 @@ pre {
 	border: 1px solid var(--color-text);
 	padding: 12px;
 	margin: 4px;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
 img {
