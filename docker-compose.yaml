@@ -7,5 +7,20 @@ services:
         # For production, change both to "release"
         PROFILE: dev
         TARGET: debug
+    command:
+    - -c
+    - /etc/opaque/config.yaml
+    - --name
+    - Enigma
+    - --description
+    - ""
+    - --author
+    - "Ryan Heywood <me@ryansquared.pub>"
+    - --url
+    - "http://localhost:8000"
+    - --static-path
+    - static
+    - -b
+    - "0.0.0.0:8000"
     ports:
     - "8000:8000"

@@ -1,0 +1,10 @@
+# Example configuration
+name: Enigma
+description: |-
+  A website and blog.
+author:
+  name: "Ryan Heywood"
+  email: "<me@ryansquared.pub>"
+static_path: static
+url: http://localhost:8000
+bind_address: 127.0.0.1:8000

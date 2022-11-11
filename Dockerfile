@@ -28,4 +28,4 @@ COPY enigma/_posts /usr/share/opaque/enigma/_posts
 COPY output_snippets /usr/share/opaque/output_snippets
 
 EXPOSE 8000
-ENTRYPOINT /usr/local/bin/opaque
+ENTRYPOINT ["/usr/local/bin/opaque"]

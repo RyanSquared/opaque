@@ -46,7 +46,7 @@ impl IntoResponse for Error {
 
 #[tracing::instrument(skip(state))]
 pub(crate) async fn index(state: Extension<Arc<State>>) -> Result<Markup> {
-    let path = state.config.content_path.join("about.md");
+    let path = "content/about.md";
     let content = render_path_to_html(path).await?;
     Ok(html! {
         (DOCTYPE)
