@@ -33,7 +33,7 @@ impl PostProcessingBuilder {
         let attribute = attribute
             .or_else(|| {
                 selector
-                    .split("[")
+                    .split('[')
                     .nth(1)
                     .map(|v| String::from(v.trim_end_matches(']')))
             })
@@ -61,7 +61,7 @@ impl PostProcessingBuilder {
             element_content_handlers.push(element!(selector, rewrite_links.build()));
         }
 
-        for (selector, convert_ansi) in self.convert_ansi_selector.clone() {
+        for (selector, convert_ansi) in self.convert_ansi_selector {
             element_content_handlers.push(element!(selector, convert_ansi.build()));
         }
 

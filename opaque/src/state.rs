@@ -121,7 +121,7 @@ impl State {
         self
     }
 
-    pub(crate) fn sorted_posts<'a>(&'a self) -> Vec<(&'a String, &'a Page)> {
+    pub(crate) fn sorted_posts(&self) -> Vec<(&String, &Page)> {
         let mut posts = self
             .posts
             .iter()

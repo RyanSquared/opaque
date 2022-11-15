@@ -50,7 +50,7 @@ async fn main() -> Result<(), Report> {
 
     info!(?state.config, "Running with given configuration");
 
-    let addr = state.config.bind_address.clone();
+    let addr = state.config.bind_address;
 
     let app = Router::new()
         .route("/", get(pages::index))

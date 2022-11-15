@@ -16,7 +16,7 @@ pub(crate) struct ConvertAnsi {
 
 impl ConvertAnsi {
     pub(crate) fn new(source_file_path: String, subdirectory: String) -> Result<Self> {
-        if let None = CACHE.get() {
+        if CACHE.get().is_none() {
             CACHE
                 .set(Mutex::new(uluru::LRUCache::default()))
                 .expect("unset cache can't be initialized");
@@ -69,7 +69,7 @@ impl super::PostProcessor for ConvertAnsi {
 
             if let Some(cache_mutex) = CACHE.get() {
                 let mut cache = cache_mutex.lock();
-                if let None = cache.find(|(k, _)| filename == *k) {
+                if cache.find(|(k, _)| filename == *k).is_none() {
                     debug!(?filename, "cache miss, updating");
                     cache.insert((filename, html_output));
                 }

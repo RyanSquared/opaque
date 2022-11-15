@@ -44,6 +44,7 @@ pub fn render_to_html(input: &str) -> Result<String> {
     let arena = Arena::new();
     let root = parse_document(&arena, input, &COMRAK_OPTIONS);
 
+    #[allow(clippy::match_single_binding)]
     iter_nodes(root, &|node| match &mut node.data.borrow_mut().value {
         _ => (),
     });

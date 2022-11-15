@@ -27,7 +27,7 @@ struct GraphicsModeState {
     background_color: SgrColor,
 }
 
-static COLORS: [&'static str; 8] = [
+static COLORS: [&str; 8] = [
     "black", "red", "green", "yellow", "blue", "purple", "cyan", "gray",
 ];
 
@@ -51,7 +51,7 @@ impl GraphicsModeState {
         let mut state = self.clone();
 
         iter_over! {
-            &input[..];
+            input;
             [0] => state = GraphicsModeState::default(),
             [1] => state.bold = true,
             [3] => state.italic = true,
@@ -66,7 +66,7 @@ impl GraphicsModeState {
             [39] => state.color = SgrColor::Reset,
             [49] => state.background_color = SgrColor::Reset,
         }
-        
+
         state
     }
 
@@ -158,11 +158,10 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
         .ansi_parse()
         .filter(|value| {
             // Trash all Escapes that aren't stylish
-            match value {
-                Output::Escape(AnsiSequence::SetGraphicsMode(_)) => true,
-                Output::TextBlock(_) => true,
-                _ => false,
-            }
+            matches!(
+                value,
+                Output::Escape(AnsiSequence::SetGraphicsMode(_)) | Output::TextBlock(_)
+            )
         })
         .collect();
 
