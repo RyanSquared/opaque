@@ -28,6 +28,7 @@ mime_guess = {version="2.0.4", optional=true}
 # Tracing
 tower-http = { version = "0.3.4", features = ["trace", "catch-panic"] }
 tracing = "0.1.35"
+tracing-error = "0.2.0"
 tracing-subscriber = {version = "0.3.11", features = ["env-filter", "fmt", "ansi", "json"]}
 
 # Post processing
@@ -50,6 +51,5 @@ uluru = "3.0.0"
 walkdir = "2.3.2"
 
 # Workspace
-opaque_markdown = { version = "0.1.0", path = "../opaque_markdown" }
-opaque_ansi = { version = "0.1.0", path = "../opaque_ansi" }
-tracing-error = "0.2.0"
+opaque-markdown = { version = "0.1.0", path = "../opaque-markdown" }
+opaque-ansi = { version = "0.1.0", path = "../opaque-ansi" }

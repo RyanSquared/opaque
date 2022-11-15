@@ -2,6 +2,6 @@
 
 members = [
   "opaque",
-  "opaque_markdown",
-  "opaque_ansi"
+  "opaque-markdown",
+  "opaque-ansi"
 ]

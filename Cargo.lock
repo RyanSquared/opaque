@@ -1175,8 +1175,8 @@ dependencies = [
  "maud",
  "mime_guess",
  "once_cell",
- "opaque_ansi",
- "opaque_markdown",
+ "opaque-ansi",
+ "opaque-markdown",
  "parking_lot",
  "serde",
  "serde_yaml",
@@ -1191,7 +1191,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "opaque_ansi"
+name = "opaque-ansi"
 version = "0.1.0"
 dependencies = [
  "ansi-parser",
@@ -1201,7 +1201,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "opaque_markdown"
+name = "opaque-markdown"
 version = "0.1.0"
 dependencies = [
  "comrak",
