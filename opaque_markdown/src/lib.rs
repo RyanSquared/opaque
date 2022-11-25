@@ -1,7 +1,7 @@
-use eyre::{Result, WrapErr};
 use comrak::{
     format_html_with_plugins, nodes::AstNode, parse_document, Arena, ComrakOptions, ComrakPlugins,
 };
+use eyre::{Result, WrapErr};
 
 #[cfg(feature = "tracing")]
 use tracing::debug;

@@ -268,9 +268,7 @@ mod tests {
         let mut state = GraphicsModeState::default();
         for code in style_codes {
             state = match code {
-                Output::Escape(AnsiSequence::SetGraphicsMode(code)) => {
-                    state.clone_from_scan(&code)
-                }
+                Output::Escape(AnsiSequence::SetGraphicsMode(code)) => state.clone_from_scan(&code),
                 _ => state,
             }
         }

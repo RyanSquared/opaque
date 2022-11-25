@@ -26,7 +26,8 @@ impl SyntaxHighlighterAdapter for SyntectAdapter {
             let Some(line) = code.lines().next() else {
                 return code.to_string()
             };
-            self.syntax_set.find_syntax_by_first_line(format!("{line}\n").as_str())
+            self.syntax_set
+                .find_syntax_by_first_line(format!("{line}\n").as_str())
         };
 
         let Some(syntax_reference) = syntax_reference else {

@@ -23,7 +23,10 @@ impl ConvertAnsi {
         }
         let source_directory = PathBuf::from(source_file_path);
         source_directory.try_exists()?;
-        Ok(ConvertAnsi { source_directory, subdirectory: PathBuf::from(subdirectory) })
+        Ok(ConvertAnsi {
+            source_directory,
+            subdirectory: PathBuf::from(subdirectory),
+        })
     }
 }
 
@@ -49,11 +52,8 @@ impl super::PostProcessor for ConvertAnsi {
                 let mut cache = cache_mutex.lock();
                 if let Some((_, hit)) = cache.find(|(k, _)| filename == *k) {
                     debug!(?filename, "cache hit");
-                    el.replace(
-                        hit.as_str(),
-                        lol_html::html_content::ContentType::Html,
-                    );
-                    return Ok(())
+                    el.replace(hit.as_str(), lol_html::html_content::ContentType::Html);
+                    return Ok(());
                 }
             }
 
