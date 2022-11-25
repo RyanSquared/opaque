@@ -190,3 +190,101 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
     output.push("</code></pre>".to_string());
     output.join("")
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use console::Style;
+
+    #[test]
+    fn parsing_basic_colors() {
+        // names are slightly different but it's :ok_hand:
+        let colors = [
+            Style::new().black(),
+            Style::new().red(),
+            Style::new().green(),
+            Style::new().yellow(),
+            Style::new().blue(),
+            Style::new().magenta(),
+            Style::new().cyan(),
+            Style::new().white(),
+        ];
+        let mut state = GraphicsModeState::default();
+        for (i, color) in colors.iter().enumerate() {
+            let color_text = color.apply_to(" ").to_string();
+            let color_code = color_text.ansi_parse().next().unwrap();
+            let Output::Escape(AnsiSequence::SetGraphicsMode(color_code)) = color_code else {
+                unreachable!();
+            };
+            state = state.clone_from_scan(&color_code);
+            // TODO: assert_matches!()
+            assert!(
+                matches!(state.color, SgrColor::Console(n) if (n as usize) == i),
+                "{:?} doesn't equal {}",
+                state.color,
+                i,
+            );
+        }
+    }
+
+    #[test]
+    fn parsing_expanded_colors() {
+        let colors = (0..=255).map(|c| Style::new().color256(c));
+        let mut state = GraphicsModeState::default();
+        for (i, color) in colors.enumerate() {
+            let color_text = color.apply_to(" ").to_string();
+            let color_code = color_text.ansi_parse().next().unwrap();
+            let Output::Escape(AnsiSequence::SetGraphicsMode(color_code)) = color_code else {
+                unreachable!();
+            };
+            state = state.clone_from_scan(&color_code);
+            // TODO: assert_matches!()
+            assert!(
+                matches!(state.color, SgrColor::ExpandedConsole(n) if (n as usize) == i),
+                "{:?} doesn't equal {}",
+                state.color,
+                i,
+            );
+        }
+    }
+
+    #[test]
+    fn parsing_styling() {
+        // console-rs doesn't implement strikethrough :(
+        let styled_text = Style::new()
+            .bold()
+            .italic()
+            .underlined()
+            .apply_to(" ")
+            .to_string();
+        let mut style_codes: Vec<_> = styled_text.ansi_parse().collect();
+        let reset = style_codes.pop().expect("no reset code"); // remove the reset code
+        let expected_state = GraphicsModeState {
+            bold: true,
+            italic: true,
+            underline: true,
+            ..Default::default()
+        };
+        let mut state = GraphicsModeState::default();
+        for code in style_codes {
+            state = match code {
+                Output::Escape(AnsiSequence::SetGraphicsMode(code)) => {
+                    state.clone_from_scan(&code)
+                }
+                _ => state,
+            }
+        }
+        assert_eq!(state, expected_state);
+        if let Output::Escape(AnsiSequence::SetGraphicsMode(code)) = reset {
+            state = state.clone_from_scan(&code);
+            assert_eq!(state, GraphicsModeState::default());
+        }
+    }
+
+    #[test]
+    fn rewriting_ansi_to_html() {
+        let input = include_str!("test_data/input");
+        let output = include_str!("test_data/output");
+        assert_eq!(rewrite_ansi_to_html(input), output);
+    }
+}

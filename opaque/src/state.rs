@@ -1,8 +1,8 @@
 use std::{collections::HashMap, path::PathBuf};
 
-use color_eyre::eyre::{Result, Report};
-use clap::Parser;
 use chrono::{DateTime, Utc};
+use clap::Parser;
+use color_eyre::eyre::{Report, Result};
 use serde::{Deserialize, Serialize};
 use tokio::fs::read_to_string;
 
@@ -22,7 +22,10 @@ impl std::str::FromStr for Author {
         let splice_index = s.find('<').ok_or(format!("could not email in {}", s))?;
         let name = &s[..splice_index].trim();
         let email = &s[splice_index + 1..].trim_matches(&['<', '>'][..]);
-        Ok(Author { name: name.to_string(), email: email.to_string() })
+        Ok(Author {
+            name: name.to_string(),
+            email: email.to_string(),
+        })
     }
 }
 
@@ -67,7 +70,7 @@ pub(crate) struct State {
 
 impl State {
     #[allow(dead_code)]
-    #[deprecated(since="0.1.0", note="use new_with_config_from_cli instead")]
+    #[deprecated(since = "0.1.0", note = "use new_with_config_from_cli instead")]
     pub(crate) fn new() -> State {
         State {
             config: Config {
@@ -79,7 +82,9 @@ impl State {
                 },
                 static_path: "static/".into(),
                 url: "https://ryansquared.pub/".to_string(),
-                bind_address: "0.0.0.0:8000".parse().expect("couldn't parse static address"),
+                bind_address: "0.0.0.0:8000"
+                    .parse()
+                    .expect("couldn't parse static address"),
             },
             page_map: vec![],
             posts: HashMap::new(),
@@ -90,7 +95,7 @@ impl State {
         let config_file = PartialConfig::parse().config_file;
         let mut config_object: PartialConfig = if config_file.exists() {
             let config_text = read_to_string(config_file).await?;
-             serde_yaml::from_str(config_text.as_str())?
+            serde_yaml::from_str(config_text.as_str())?
         } else {
             Default::default()
         };
@@ -129,5 +134,38 @@ impl State {
             .collect::<Vec<(&String, &Page)>>();
         posts.sort_by_key(|v| std::cmp::Reverse(v.1.front_matter.date));
         posts
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parse_author() {
+        let author = "Ryan Heywood <me@ryansquared.pub>";
+        let Author { name, email } = author.parse().unwrap();
+        assert_eq!(name, "Ryan Heywood");
+        assert_eq!(email, "me@ryansquared.pub");
+    }
+
+    #[test]
+    fn generate_slug() {
+        let slugs = [
+            (
+                "An Inescapable Hell of Networking",
+                "an-inescapable-hell-of-networking",
+            ),
+            ("Exploring Qubes RPC", "exploring-qubes-rpc"),
+        ];
+        for (expected, actual) in slugs {
+            let fm = FrontMatter {
+                title: expected.to_string(),
+                author: None,
+                date: None,
+                published: None,
+            };
+            assert_eq!(fm.slug(), actual);
+        }
     }
 }
