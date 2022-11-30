@@ -10,6 +10,7 @@ use std::path::Path;
 
 mod syntect_adapter;
 
+/// Create opinionated defaults for Comrak.
 fn create_options() -> ComrakOptions {
     let mut comrak_options = ComrakOptions::default();
     comrak_options.extension.strikethrough = true;
@@ -29,6 +30,7 @@ lazy_static::lazy_static! {
     static ref COMRAK_OPTIONS: ComrakOptions = create_options();
 }
 
+/// Call a given function for the current and every possible child of the Markdown node.
 fn iter_nodes<'a, F>(node: &'a AstNode<'a>, f: &F)
 where
     F: Fn(&'a AstNode<'a>),
