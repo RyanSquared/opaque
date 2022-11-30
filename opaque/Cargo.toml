@@ -51,5 +51,5 @@ uluru = "3.0.0"
 walkdir = "2.3.2"
 
 # Workspace
-opaque-markdown = { version = "0.1.0", path = "../opaque-markdown" }
+opaque-markdown = { version = "0.2.0", path = "../opaque-markdown" }
 opaque-ansi = { version = "0.1.0", path = "../opaque-ansi" }

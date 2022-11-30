@@ -39,6 +39,7 @@ where
     }
 }
 
+/// Render a Markdown input to HTML using opinionated Comrak definitions.
 pub fn render_to_html(input: &str) -> Result<String> {
     // Create an arena for rendering purposes
     let arena = Arena::new();
@@ -59,6 +60,8 @@ pub fn render_to_html(input: &str) -> Result<String> {
     String::from_utf8(html).wrap_err("unable to decode html from utf8")
 }
 
+/// Load a file from the filesystem and render the the contents to HTML using opinionated Comrak
+/// definitions.
 #[cfg_attr(feature = "tracing", tracing::instrument)]
 #[cfg(feature = "tokio")]
 pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
@@ -73,15 +76,21 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
     render_to_html(file_content.as_str())
 }
 
-#[cfg_attr(feature = "tracing", tracing::instrument)]
-#[cfg(not(feature = "tokio"))]
-pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
-    #[cfg(feature = "tracing")]
-    debug!("reading file");
+/// Perform synchronous (blocking) functions.
+pub mod sync {
+    use super::*;
 
-    let file_content = std::fs::read_to_string(&path)?;
+    /// Load a file from the filesystem and render the the contents to HTML using opinionated
+    /// Comrak definitions.
+    #[cfg_attr(feature = "tracing", tracing::instrument)]
+    pub fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Result<String> {
+        #[cfg(feature = "tracing")]
+        debug!("reading file");
 
-    #[cfg(feature = "tracing")]
-    debug!("rendering HTML");
-    render_to_html(file_content.as_str())
+        let file_content = std::fs::read_to_string(&path)?;
+
+        #[cfg(feature = "tracing")]
+        debug!("rendering HTML");
+        render_to_html(file_content.as_str())
+    }
 }
