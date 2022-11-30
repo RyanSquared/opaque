@@ -3,15 +3,21 @@ use ansi_parser::{AnsiParser, AnsiSequence, Output};
 #[cfg(feature = "tracing")]
 use tracing::debug;
 
+/// The three color options for SGR color codes and a default option.
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
-pub(crate) enum SgrColor {
+enum SgrColor {
     #[default]
     Reset,
+    /// A value of 0..=7 to represent one of 8 standard terminal colors.
     Console(u8),
+    /// A value of 0..=255 to represent one of 256 standard terminal colors.
     ExpandedConsole(u8),
+    /// Three values of 0..=255 to represent a "true" RGB color value.
     True(u8, u8, u8),
 }
 
+/// The continuous state of the next block of text. A new set of SGR parameters does not imply that
+/// the state should be reset unless the 0 (reset) parameter has been explicitly used.
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 struct GraphicsModeState {
     // reset is interpreted as resetting everything to default
@@ -27,13 +33,31 @@ struct GraphicsModeState {
     background_color: SgrColor,
 }
 
+/// The standard terminal colors, approximated from experience with various terminals.
 static COLORS: [&str; 8] = [
     "black", "red", "green", "yellow", "blue", "purple", "cyan", "gray",
 ];
 
+/// Iterate over a slice using a variable-argument matching pattern. The iterator moves after the
+/// end of the slice, so matching two values moves the slice to the right by two.
+///
+/// # Examples
+///
+/// ```rust
+/// let slice = ["a", "b", "c", "d"];
+/// let mut output = vec![];
+/// opaque_ansi::iter_over! {
+///     slice;
+///     [a @ "a"] => output.push(vec![a]),
+///     [b @ "b", c @ "c"] => output.push(vec![b, c]),
+///     [d @ "d"] => output.push(vec![d]),
+/// }
+/// # assert_eq!(vec![vec![&"a"], vec![&"b", &"c"], vec![&"d"]], output);
+/// ```
+#[macro_export]
 macro_rules! iter_over {
     ($input:expr; $([$($t:pat_param),*] => $s:expr,)+) => {
-        let mut input = $input;
+        let mut input = &$input[..];
         loop {
             input = match input {
                 $(
@@ -47,6 +71,7 @@ macro_rules! iter_over {
 }
 
 impl GraphicsModeState {
+    /// Returns a copy of Self, setting values based off SGR parameters from the input.
     fn clone_from_scan(&self, input: &[u8]) -> Self {
         let mut state = self.clone();
 
@@ -70,6 +95,14 @@ impl GraphicsModeState {
         state
     }
 
+    /// Returns opening and closing HTML tags representing the formatting of the text. All
+    /// non-truecolor colors require a stylesheet to be provided.
+    /// [`SgrColor::Console`] values are represented using a `--color-{c}` CSS variable, using
+    /// the value from [`COLORS`].
+    /// [`SgrColor::ExpandedConsole`] values are represented using a `--terminal-color-{n}` CSS
+    /// variable.
+    /// [`SgrColor::True`] values are represented using `rgb({r}, {g}, {b})`.
+    /// When the state matches the "default" state, empty strings are returned.
     fn build_tags(&self) -> (String, String) {
         if self == &Self::default() {
             return ("".to_string(), "".to_string());
@@ -149,6 +182,9 @@ impl GraphicsModeState {
     }
 }
 
+/// Render an ANSI terminal output to HTML, using [SGR] parameters to generate formatting.
+///
+/// [SGR]: https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
 #[cfg_attr(feature = "tracing", tracing::instrument(skip(input)))]
 pub fn rewrite_ansi_to_html(input: &str) -> String {
     #[cfg(feature = "tracing")]
