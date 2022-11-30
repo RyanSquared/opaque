@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use color_eyre::eyre::{Report, WrapErr};
+use color_eyre::{eyre::{Report, WrapErr}, Section};
 use tower_http::catch_panic::CatchPanicLayer;
 use tower_http::trace::TraceLayer;
 use tracing::info;
@@ -45,7 +45,8 @@ async fn main() -> Result<(), Report> {
         .with_posts(
             post_scanner::walk_directory("content/posts")
                 .await
-                .wrap_err("Unable to load posts from posts directory")?,
+                .wrap_err("Unable to load posts from posts directory")
+                .suggestion("Run in Docker or Docker Compose?")?,
         );
 
     info!(?state.config, "Running with given configuration");
