@@ -14,7 +14,11 @@ pub(crate) fn post_list(
     let posts = state.sorted_posts();
     html! {
         h2 { (header.unwrap_or("Posts")) }
-        @for post in posts.iter().take(post_limit) {
+        @for post in posts
+            .iter()
+            .filter(|p| p.1.front_matter.published.unwrap_or(true))
+            .take(post_limit)
+        {
             div.post {
                 small {
                     @if let Some(date) = post.1.front_matter.date {
