@@ -23,7 +23,9 @@ WORKDIR /usr/share/opaque
 COPY static /usr/share/opaque/static
 COPY enigma/_posts /usr/share/opaque/content/posts
 COPY enigma/*.md /usr/share/opaque/content
-COPY enigma/assets/images /usr/share/opaque/static/assets/images
+# this hack is stupid.
+RUN rm -f /usr/share/opaque/static/assets/images || true
+COPY enigma/assets /usr/share/opaque/static/assets
 COPY enigma/_posts /usr/share/opaque/enigma/_posts
 COPY output_snippets /usr/share/opaque/output_snippets
 
