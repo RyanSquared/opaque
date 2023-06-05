@@ -1,4 +1,4 @@
-FROM rust:1.65 AS builder
+FROM registry.hub.docker.com/library/rust:1.65 AS builder
 
 # Note: When in release mode, both of these should be `release`. When in dev
 # mode, PROFILE is dev, TARGET is debug
@@ -22,7 +22,7 @@ WORKDIR /usr/share/opaque
 # Load static content from Enigma and Opaque
 COPY static /usr/share/opaque/static
 COPY enigma/_posts /usr/share/opaque/content/posts
-COPY enigma/*.md /usr/share/opaque/content
+COPY enigma/*.md /usr/share/opaque/content/
 # this hack is stupid.
 RUN rm -f /usr/share/opaque/static/assets/images || true
 COPY enigma/assets /usr/share/opaque/static/assets
