@@ -1,4 +1,4 @@
-FROM registry.hub.docker.com/library/rust:1.65 AS builder
+FROM registry.hub.docker.com/library/rust:1.71 AS builder
 
 # Note: When in release mode, both of these should be `release`. When in dev
 # mode, PROFILE is dev, TARGET is debug
