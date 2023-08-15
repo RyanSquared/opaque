@@ -9,10 +9,11 @@ fn default_config_file() -> PathBuf {
     "config.yaml".into()
 }
 
-/// This can be loaded from a configuration file and command line and then flattened into the
-/// resulting Config
+// This can be loaded from a configuration file and command line and then flattened into the
+// resulting Config
+
+/// An unsafe blog engine
 #[derive(Clone, Debug, Default, Deserialize, Serialize, Parser)]
-#[command(author, version)]
 pub(crate) struct PartialConfig {
     /// The configuration file to load settings from
     #[arg(long, short, default_value = "config.yaml")]
