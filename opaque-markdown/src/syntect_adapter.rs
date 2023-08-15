@@ -5,7 +5,7 @@ use syntect::{
     util::LinesWithEndings,
 };
 
-/// A Syntect adapter plugin for Comrak to use a ClassedHTMLGenerator.
+/// A Syntect adapter plugin for Comrak to use a [`ClassedHTMLGenerator`].
 #[derive(Debug, Clone)]
 pub(crate) struct SyntectAdapter {
     syntax_set: SyntaxSet,
@@ -21,9 +21,10 @@ impl SyntectAdapter {
 
 impl SyntaxHighlighterAdapter for SyntectAdapter {
     /// Given an optional language and a code block, highlight the code block using a
-    /// ClassedHTMLGenerator. The produced classes have a "syntect-" prefix. This method does not
-    /// return an error and, upon reaching an error, instead returns the string representation of
-    /// that error.
+    /// [`ClassedHTMLGenerator`]. The produced classes have a "syntect-" prefix.
+    ///
+    /// If Syntect is unable to highlight a section of code, or is unable to determine the language
+    /// the code has been written in, it will instead return the unmodified code as a string.
     fn highlight(&self, lang: Option<&str>, code: &str) -> String {
         let syntax_reference = if let Some(lang_name) = lang {
             self.syntax_set.find_syntax_by_token(lang_name)

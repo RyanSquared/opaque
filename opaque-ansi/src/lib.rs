@@ -19,6 +19,7 @@ enum SgrColor {
 /// The continuous state of the next block of text. A new set of SGR parameters does not imply that
 /// the state should be reset unless the 0 (reset) parameter has been explicitly used.
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
+#[allow(clippy::struct_excessive_bools)]
 struct GraphicsModeState {
     // reset is interpreted as resetting everything to default
     // the methods defined here are taken from:
@@ -105,7 +106,7 @@ impl GraphicsModeState {
     /// When the state matches the "default" state, empty strings are returned.
     fn build_tags(&self) -> (String, String) {
         if self == &Self::default() {
-            return ("".to_string(), "".to_string());
+            return (String::new(), String::new());
         }
 
         let mut opening_tags = vec![];
@@ -138,17 +139,17 @@ impl GraphicsModeState {
                     COLORS[n as usize]
                 );
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             SgrColor::ExpandedConsole(n) => {
-                let span = format!("<span style=\"color: var(--terminal-color-{})\">", n);
+                let span = format!("<span style=\"color: var(--terminal-color-{n})\">");
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             SgrColor::True(r, g, b) => {
                 let span = format!("<span style=\"color: rgb({r}, {g}, {b})\">");
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             _ => (),
         }
@@ -160,24 +161,24 @@ impl GraphicsModeState {
                     COLORS[n as usize]
                 );
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             SgrColor::ExpandedConsole(n) => {
                 let span = format!("<span style=\"background-color: var(--terminal-color-{n})\">");
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             SgrColor::True(r, g, b) => {
                 let span = format!("<span style=\"background-color: rgb({r}, {g}, {b})\">");
                 opening_tags.push(span);
-                closing_tags.push("</span>".to_string())
+                closing_tags.push("</span>".to_string());
             }
             _ => (),
         }
 
         (
             opening_tags.join(""),
-            closing_tags.into_iter().rev().collect::<Vec<_>>().join(""),
+            closing_tags.into_iter().rev().collect::<String>(),
         )
     }
 }
@@ -209,7 +210,7 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
     #[cfg(feature = "tracing")]
     debug!("converting ANSI escape code and text chunks to HTML");
 
-    for block in parsed.into_iter() {
+    for block in parsed {
         match block {
             Output::Escape(AnsiSequence::SetGraphicsMode(mode)) => {
                 state = state.clone_from_scan(&mode[..]);
@@ -219,7 +220,7 @@ pub fn rewrite_ansi_to_html(input: &str) -> String {
                 let text = html_escape::encode_text(text);
                 output.push(format!("{opening_tags}{text}{closing_tags}"));
             }
-            _ => {}
+            Output::Escape(_) => {}
         }
     }
 

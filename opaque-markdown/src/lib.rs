@@ -42,6 +42,10 @@ where
 }
 
 /// Render a Markdown input to HTML using opinionated Comrak definitions.
+///
+/// # Errors
+///
+/// May arise from [`format_html_with_plugins`], returning a wrapped [`std::io::Error`].
 pub fn render_to_html(input: &str) -> Result<String> {
     // Create an arena for rendering purposes
     let arena = Arena::new();
@@ -80,7 +84,7 @@ pub async fn render_path_to_html(path: impl AsRef<Path> + std::fmt::Debug) -> Re
 
 /// Perform synchronous (blocking) functions.
 pub mod sync {
-    use super::*;
+    use super::{Path, Result, debug, render_to_html};
 
     /// Load a file from the filesystem and render the the contents to HTML using opinionated
     /// Comrak definitions.

@@ -13,9 +13,9 @@ tokio = ["dep:tokio"]
 tracing = ["dep:tracing"]
 
 [dependencies]
-comrak = { version = "0.14.0", features = ["syntect"] }
-eyre = "0.6.8"
+comrak = { version = "0.14.0", default-features = false }
+eyre = { version = "0.6.8", default-features = false, features = ["track-caller"] }
 lazy_static = "1.4.0"
-syntect = "5.0.0"
+syntect = { version = "5.0.0", default-features = false, features = ["html", "default-themes", "default-syntaxes", "fancy-regex", "regex-fancy"] }
 tokio = { version = "1.21.2", optional = true, features = ["fs"] }
-tracing = {version="0.1.35", optional=true}
+tracing = { version = "0.1.35", optional = true }

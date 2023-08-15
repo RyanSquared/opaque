@@ -1,12 +1,12 @@
 use color_eyre::eyre::Result;
-use once_cell::sync::OnceCell;
+use std::sync::OnceLock;
 use parking_lot::Mutex;
 use std::path::PathBuf;
 use tracing::{debug, span, Level};
 
 use opaque_ansi::rewrite_ansi_to_html;
 
-static CACHE: OnceCell<Mutex<uluru::LRUCache<(String, String), 256>>> = OnceCell::new();
+static CACHE: OnceLock<Mutex<uluru::LRUCache<(String, String), 256>>> = OnceLock::new();
 
 #[derive(Debug, Clone)]
 pub(crate) struct ConvertAnsi {
@@ -41,7 +41,7 @@ impl super::PostProcessor for ConvertAnsi {
 
             let mut path = self.source_directory.clone();
             if el.get_attribute("relative").is_some() {
-                path = path.join(self.subdirectory.as_path())
+                path = path.join(self.subdirectory.as_path());
             }
             path = path.join(filename.as_str().trim_matches('/'));
 

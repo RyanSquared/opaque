@@ -19,9 +19,9 @@ impl std::str::FromStr for Author {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         // Ryan Heywood <ryan@hashbang.sh>
-        let splice_index = s.find('<').ok_or(format!("could not email in {}", s))?;
-        let name = &s[..splice_index].trim();
-        let email = &s[splice_index + 1..].trim_matches(&['<', '>'][..]);
+        let splice_index = s.find('<').ok_or(format!("could not find email in {s}"))?;
+        let name = s[..splice_index].trim();
+        let email = s[splice_index + 1..].trim_matches(&['<', '>'][..]);
         Ok(Author {
             name: name.to_string(),
             email: email.to_string(),
@@ -75,7 +75,7 @@ impl State {
         State {
             config: Config {
                 name: "Enigma".to_string(),
-                description: "".to_string(),
+                description: String::new(),
                 author: Author {
                     name: "RyanSquared".to_string(),
                     email: "me@ryansquared.pub".to_string(),
@@ -97,7 +97,7 @@ impl State {
             let config_text = read_to_string(config_file).await?;
             serde_yaml::from_str(config_text.as_str())?
         } else {
-            Default::default()
+            PartialConfig::default()
         };
 
         // takes priority

@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::{extract::Path, Extension};
 use maud::{html, PreEscaped, DOCTYPE};
-use once_cell::sync::OnceCell;
+use std::sync::OnceLock;
 use tokio::sync::Mutex;
 use tracing::debug;
 
@@ -14,7 +14,7 @@ use crate::state::State;
 
 // Note: the cache doesn't need to be held across async yield boundaries, but tokio::sync::Mutex is
 // still required over parking_lot::Mutex
-static CACHE: OnceCell<Mutex<uluru::LRUCache<(String, String), 32>>> = OnceCell::new();
+static CACHE: OnceLock<Mutex<uluru::LRUCache<(String, String), 32>>> = OnceLock::new();
 
 #[tracing::instrument(skip(state))]
 #[cfg_attr(debug_assertions, axum::debug_handler)]
@@ -39,9 +39,8 @@ pub(crate) async fn index(state: Extension<Arc<State>>) -> Result {
 #[tracing::instrument(skip(state, post_slug))]
 #[cfg_attr(debug_assertions, axum::debug_handler)]
 pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<State>>) -> Result {
-    let post = match state.posts.get(&post_slug) {
-        Some(post) => post,
-        None => return Err(Error::PostNotFound(post_slug)),
+    let Some(post) = state.posts.get(&post_slug) else {
+        return Err(Error::PostNotFound(post_slug))
     };
 
     debug!(?post.front_matter.title, "found post for slug");
@@ -57,6 +56,8 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
         .lock()
         .await;
 
+    // NOTE: This could be if-let-else but I prefer matching style for return types
+    #[allow(clippy::single_match_else)]
     let content = match cache.find(|(k, _)| post_slug == *k) {
         Some((_, hit)) => {
             debug!(?post_slug, "markdown: cache hit");
