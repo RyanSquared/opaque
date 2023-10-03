@@ -46,9 +46,6 @@ pub(crate) fn footer(state: &Extension<Arc<State>>) -> Markup {
     html! {
         footer {
             .content {
-                h2 {
-                    (state.config.name);
-                }
                 // Partitioned: 30%, 25%, 45%
                 div {
                     div {
