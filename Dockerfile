@@ -19,14 +19,9 @@ COPY --from=builder /out/opaque /usr/local/bin/opaque
 
 WORKDIR /usr/share/opaque
 
-# Load static content from Enigma and Opaque
+# Load static content and posts
 COPY static /usr/share/opaque/static
-COPY enigma/_posts /usr/share/opaque/content/posts
-COPY enigma/*.md /usr/share/opaque/content/
-# this hack is stupid.
-RUN rm -f /usr/share/opaque/static/assets/images || true
-COPY enigma/assets /usr/share/opaque/static/assets
-COPY enigma/_posts /usr/share/opaque/enigma/_posts
+COPY content /usr/share/opaque/content
 COPY output_snippets /usr/share/opaque/output_snippets
 
 EXPOSE 8000
