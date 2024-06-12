@@ -74,7 +74,7 @@ async fn main() -> Result<(), Report> {
         .layer(Extension(Arc::new(state)))
         .layer(TraceLayer::new_for_http());
 
-    info!("serving on: {addr}");
+    info!("serving on: http://{addr}");
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())

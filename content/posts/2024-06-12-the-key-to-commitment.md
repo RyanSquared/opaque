@@ -6,7 +6,7 @@ date: 2024-06-12T04:49:00-0000
 
 I recently came across a post on [threat models of encryption at rest][tmear]
 and went down the rabbit hole of key commitment. As someone who is interested
-in key derivation and client-provided keys (check out Keyfork!), I found it
+in key derivation and client-provided keys (check out [Keyfork]!), I found it
 interesting that the encryption scheme I've used in previous projects (AES-GCM)
 as well as another encryption scheme [recommended] instead (XChaCha20-Poly1305)
 would fall victim to key commitment attacks. As much as I'd like to immediately
@@ -241,3 +241,4 @@ function.
 [tmear]: https://scottarc.blog/2024/06/02/encryption-at-rest-whose-threat-model-is-it-anyway/
 [recommended]: https://soatok.blog/2020/05/13/why-aes-gcm-sucks/
 [canonicalization attack]: https://soatok.blog/2021/07/30/canonicalization-attacks-against-macs-and-signatures/
+[Keyfork]: https://git.distrust.co/public/keyfork
