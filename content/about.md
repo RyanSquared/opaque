@@ -6,11 +6,11 @@ permalink: /about/
 
 ## About Me
 
-My name is Ryan Heywood. I'm a software developer with an interest towards
-security and cryptography. I've contributed to projects in the past, such as
-[Hashbang][hashbang] ([GitHub][hashbang-github]) and [ALE]. I've also built pet
-projects in [Flask] and I'm currently learning Rust through writing a blog in
-[Axum].
+I am Ryan Heywood, a software developer with an interest towards security and
+cryptography. I've contributed to projects in the past, such as
+[Hashbang][hashbang] ([GitHub][hashbang-github]) and [ALE]. My biggest recent
+project has been [Keyfork], a key management and disaster recovery toolkit
+written in Rust, a language I picked up by writing my blog (using [Axum]).
 
 ## Some of my Favorite Projects
 
@@ -63,7 +63,6 @@ this website have been released to the public domain.
 [hashbang]: https://hashbang.sh
 [hashbang-github]: https://github.com/hashbang
 [ALE]: https://github.com/dense-analysis/ale
-[Flask]: https://flask.palletsprojects.com/
 [Axum]: https://github.com/tokio-rs/axum
 [Keyfork]: https://git.distrust.co/public/keyfork
 [Shell Server]: https://github.com/hashbang/shell-server
