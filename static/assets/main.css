@@ -25,7 +25,7 @@
 	--color-bright-cyan: #5C8C8C;
 	/* Don't think too hard. Terminal colors are weird. */
 	--color-bright-gray: #FFFFFF;
-	--color-text: #262626;
+	--color-text: #1C1C1C;
 
 	/* Behold: 256 (-16, Apprentice) colors! */
 	--terminal-color-0: var(--color-black);
@@ -301,7 +301,7 @@
 		--color-purple: #5F5F87;
 		--color-cyan: #5F8787;
 		--color-gray: #6C6C6C;
-		--color-background: #262626;
+		--color-background: #1C1C1C;
 
 		--color-bright-black: #444444;
 		--color-bright-red: #FF8700;
@@ -348,12 +348,13 @@ body {
 }
 
 pre {
-	overflow: auto;
 	/* for the scroll bar */
-	border: 1px solid var(--color-text);
-	padding: 12px;
-	margin: 4px;
-	background-color: rgba(0, 0, 0, 0.05);
+	overflow: auto;
+	/* border: 1px solid var(--color-text); */
+	box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.125);
+	padding: 8px;
+	margin: 8px;
+	background-color: rgba(0, 0, 0, 0.125);
 }
 
 img {
