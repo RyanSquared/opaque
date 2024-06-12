@@ -25,18 +25,21 @@ as the AEAD tag will be invalid.
 
 ## What is key commitment?
 
-The AEAD mechanism assumes the same key will be used through all procedures
-and that no other keys are included, such as per-client keys, or custom-derived
-keys for specific fields or regions of a database. If another key were to be
-used, there is no guarantee that the _new_ key does not decrypt the ciphertext
-into a valid plaintext. This means the key has not been committed to the
-ciphertext, and decryption with new keys could result in a valid decryption.
+Key commitment is the assurance that the combination of the ciphertext and
+authentication tag could only have been created by the key used to decrypt.
+This is not a property that exists for AES-GCM or ChaCha20-Poly1305, as it is
+possible to provide two plaintexts that produce the same combination of
+ciphertext and authentication tag. Therefore, any system that refers to a
+combination of the ciphertext and authentication tag as its own unique message
+may have logical issues where two different keys and plaintexts produce the
+same combination.
 
-This is because GMAC, and presumably most polynomial MAC functions (which would
-include Poly1305), do not incorporate the key in the generated MAC in any way.
-As such, it is possible for two distinct keys to generate the same tag. This
-attack, called the Invisible Salamander attack, is difficult to pull off, but
-the fact that it's possible even in theory means there is room for improvement.
+Key commitment attacks are possible because GMAC, and presumably most
+polynomial MAC functions (which would include Poly1305), do not incorporate the
+key in the generated MAC in any way.  As such, it is possible for two distinct
+keys to generate the same tag. This attack, called the Invisible Salamander
+attack, is difficult to pull off, but the fact that it's possible even in
+theory means there is room for improvement.
 
 By incorporating the key, or the mechanism used to derive the key, into the
 generation of the authentication tag, we are able to commit the key to the
@@ -146,7 +149,7 @@ fn main() {
             aad: &bincode::serialize(&[&aad[..]][..]).unwrap(),
             // The recipient can use the AAD they got alongside the ciphertext
         },
-    );
+    ).unwrap();
 }
 ```
 
@@ -222,12 +225,18 @@ fn main() {
             // Now the recipient passes the commitment, to ensure they're using
             // the correct key.
         },
-    );
+    ).unwrap();
 }
 ```
 
 If you are concerned about Invisible Salamander attacks, refer to your local
 cryptographer for more advice on whether this solution may be relevant for you.
+
+---
+
+EDIT (2024-06-12T06:50:00Z-0000): Restate the importance of key commitment, the
+types of key commitment attacks, and add unwrap statements to the decrypt
+function.
 
 [tmear]: https://scottarc.blog/2024/06/02/encryption-at-rest-whose-threat-model-is-it-anyway/
 [recommended]: https://soatok.blog/2020/05/13/why-aes-gcm-sucks/
