@@ -28,11 +28,11 @@ as the AEAD tag will be invalid.
 Key commitment is the assurance that the combination of the ciphertext and
 authentication tag could only have been created by the key used to decrypt.
 This is not a property that exists for AES-GCM or ChaCha20-Poly1305, as it is
-possible to provide two plaintexts that produce the same combination of
-ciphertext and authentication tag. Therefore, any system that refers to a
-combination of the ciphertext and authentication tag as its own unique message
-may have logical issues where two different keys and plaintexts produce the
-same combination.
+possible to provide two plaintexts that, encrypted with two different keys,
+produce the same combination of ciphertext and authentication tag. Therefore,
+any system that refers to a combination of the ciphertext and authentication
+tag as its own unique message may have logical issues where two different keys
+and plaintexts produce the same combination.
 
 Key commitment attacks are possible because GMAC, and presumably most
 polynomial MAC functions (which would include Poly1305), do not incorporate the
