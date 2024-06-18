@@ -66,7 +66,7 @@ pub(crate) async fn slug(Path(post_slug): Path<String>, state: Extension<Arc<Sta
         None => {
             #[allow(clippy::let_and_return)] 
             let content = render_path_to_html(post.file_path.as_path()).await?;
-            #[cfg(cache)]
+            #[cfg(feature = "cache")]
             cache.insert((post_slug.clone(), content.clone()));
             content
         }
