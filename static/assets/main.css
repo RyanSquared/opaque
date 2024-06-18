@@ -457,3 +457,15 @@ div.post {
 div.post > h3 {
 	margin-top: 4px;
 }
+
+blockquote {
+	border-left: 2px gray solid;
+	margin-left: 0px;
+	padding-left: 8px;
+}
+
+@media screen and (min-width: 900px) {
+	blockquote {
+		padding-right: 33%;
+	}
+}
