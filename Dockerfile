@@ -10,7 +10,7 @@ WORKDIR /build
 RUN \
     --mount=type=cache,target=/build/target \
     --mount=type=cache,target=/usr/local/cargo/registry \
-    cargo build --profile $PROFILE && \
+    cargo build --profile $PROFILE --features cache && \
     mkdir -p /out && \
     find /build/target/$TARGET -type f -executable -name opaque -exec cp {} /out \;
 
