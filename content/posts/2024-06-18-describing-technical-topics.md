@@ -4,7 +4,7 @@ title: Describing Technical Topics
 date: 2024-06-18T23:12:00-0000
 ---
 
-In a recent post, I struggled to properly demonstrate the importance of key
+In [a recent post], I struggled to properly demonstrate the importance of key
 commitment, which happened to be the entire topic of the post. In doing so, I
 caused confusion for people reading the post, and had to go back and rewrite
 an entire section to more clearly represent the topic I was discussing. Posts
@@ -81,3 +81,5 @@ commitment article, you may choose to consider what solution can be built upon
 the existing foundation. It is worth considering all possible options and even
 mentioning to the user solutions that may exist for similar, but alternative,
 problems.
+
+[a recent post]: /posts/the-key-to-commitment
