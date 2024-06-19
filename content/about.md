@@ -47,7 +47,7 @@ to reach me:
 
 * Matrix: [@ryansquared:beeper.com](matrix://u/ryansquared:beeper.com)
 * IRC: ryan:irc.hashbang.sh
-* Mastodon: [@ryan@tilde.town](https://tilde.town/@ryan)
+* Mastodon: [@ryan@tilde.zone](https://tilde.zone/@ryan)
 
 If you need to reach me in a secure manner, you can do so using PGP. My PGP key
 key is [openpgp4fpr:88823A75ECAA786B0FF38B148E401478A3FBEF72][keyoxide] and is
