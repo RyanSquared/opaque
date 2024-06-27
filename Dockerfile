@@ -1,28 +1,44 @@
-FROM registry.hub.docker.com/library/rust:1.71 AS builder
+FROM scratch AS base
 
-# Note: When in release mode, both of these should be `release`. When in dev
-# mode, PROFILE is dev, TARGET is debug
 ARG PROFILE=dev
-ARG TARGET=debug
-ADD . /build
-WORKDIR /build
 
-RUN \
-    --mount=type=cache,target=/build/target \
-    --mount=type=cache,target=/usr/local/cargo/registry \
-    cargo build --profile $PROFILE --features cache && \
-    mkdir -p /out && \
-    find /build/target/$TARGET -type f -executable -name opaque -exec cp {} /out \;
+FROM base AS fetch
+COPY --from=stagex/rust . /
+COPY --from=stagex/busybox . /
+COPY --from=stagex/musl . /
+COPY --from=stagex/gcc . /
+COPY --from=stagex/llvm . /
+COPY --from=stagex/libunwind . /
+COPY --from=stagex/openssl . /
+COPY --from=stagex/zlib . /
+COPY --from=stagex/ca-certificates . /
+COPY . /opaque
+WORKDIR opaque
+RUN cargo fetch
 
-FROM debian:bullseye
-COPY --from=builder /out/opaque /usr/local/bin/opaque
+FROM fetch AS build
+COPY --from=stagex/binutils . /
+ENV RUSTFLAGS='-C codegen-units=1 -C target-feature=+crt-static'
+RUN --network=none \
+    cargo build \
+        --frozen \
+        --profile $PROFILE \
+        --target x86_64-unknown-linux-musl \
+        --bin opaque
 
-WORKDIR /usr/share/opaque
+FROM build AS install
+RUN <<-EOF
+    set -eux
+    mkdir -p /rootfs/usr/bin /rootfs/usr/share/opaque
+    find /opaque/target -type f -executable -name opaque -exec cp {} /rootfs/usr/bin \;
+EOF
+COPY static /rootfs/usr/share/opaque/static
+COPY content /rootfs/usr/share/opaque/content
+COPY output_snippets /rootfs/usr/share/opaque/output_snippets
 
-# Load static content and posts
-COPY static /usr/share/opaque/static
-COPY content /usr/share/opaque/content
-COPY output_snippets /usr/share/opaque/output_snippets
 
+FROM stagex/filesystem AS package
 EXPOSE 8000
-ENTRYPOINT ["/usr/local/bin/opaque"]
+COPY --from=install /rootfs/. /
+WORKDIR /usr/share/opaque
+ENTRYPOINT ["/usr/bin/opaque"]
