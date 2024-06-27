@@ -40,5 +40,8 @@ COPY output_snippets /rootfs/usr/share/opaque/output_snippets
 FROM stagex/filesystem AS package
 EXPOSE 8000
 COPY --from=install /rootfs/. /
+# NOTE: Needed for `cp` in deployment
+COPY --from=stagex/busybox . /
+COPY --from=stagex/musl . /
 WORKDIR /usr/share/opaque
 ENTRYPOINT ["/usr/bin/opaque"]
